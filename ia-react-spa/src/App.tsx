@@ -1,12 +1,11 @@
 import React from 'react';
-import {Button} from "@mui/material";
 
+// Primarily handles routing and
 const App: React.FC = () => {
-  return (
-    <div className="App">
-      <Button variant="contained" className="m-4 bg-red-500">Hello I am a button</Button>
-    </div>
-  );
+    return (
+        <div className="App">
+        </div>
+    );
 }
 
 export default App;
