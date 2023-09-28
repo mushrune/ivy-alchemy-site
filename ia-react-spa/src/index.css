@@ -1,3 +1,16 @@
 /*@tailwind base; <- tailwind preflight. See https://tailwindcss.com/docs/preflight */
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .nav-button {
+        @apply
+            text-primary hover:text-white
+            select-none lowercase
+            transition duration-300
+            flex items-center justify-center
+            w-fit
+            text-sm sm:text-2xl
+            font-semibold italic
+    }
+}

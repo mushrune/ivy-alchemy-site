@@ -11,21 +11,20 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 // Project imports:
 import './index.css';
 import App from './App';
-import { Palette } from './Theme/MuiPalette';
+import Options from './Theme/MUITheme';
 import { Routes } from './Routes';
 
 // Establish the root
 const rootElement = document.getElementById('root') as HTMLElement;
 const root = ReactDOM.createRoot( rootElement! )
 
-// Create the theme
-const theme = createTheme({
-    palette: Palette,
-    components: {
-        MuiPopover: { defaultProps: { container: rootElement }, },
-        MuiPopper: { defaultProps: { container: rootElement }, },
-    },
-});
+// Create the theme, look for the color options in ./Theme/MUITheme.ts
+const themeOptions = Options;
+themeOptions.components = {
+    MuiPopover: { defaultProps: { container: rootElement }, },
+    MuiPopper: { defaultProps: { container: rootElement }, },
+};
+const theme = createTheme( themeOptions );
 
 // Create the router
 const router = createBrowserRouter( Routes );
