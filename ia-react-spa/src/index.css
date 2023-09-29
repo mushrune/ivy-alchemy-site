@@ -9,8 +9,12 @@
             select-none lowercase
             transition duration-300
             flex items-center justify-center
-            w-fit
             text-sm sm:text-2xl
-            font-semibold italic
+            font-semibold sm:font-normal italic
+    }
+
+    .horizontal-line {
+        @apply
+            bg-green-300 border-0 w-full h-px
     }
 }
