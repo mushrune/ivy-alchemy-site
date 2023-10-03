@@ -10,10 +10,6 @@ const Options: ThemeOptions = {
         secondary: {
             main: '#ffeb3b',
         },
-        text: {
-            secondary: 'rgba(86,86,86,0.6)',
-            disabled: 'rgba(146,146,146,0.38)',
-        },
         background: {
             default: '#166534',
             paper: '#052e16',
@@ -22,7 +18,7 @@ const Options: ThemeOptions = {
     typography: {
         button: {
             fontWeight: 1000,
-            fontFamily: '"Rubik", "Roboto", "Helvetica", "Arial", sans-serif',
+            fontFamily: 'Rubik',
         },
         h1: {
             fontFamily: 'Merriweather',
@@ -38,7 +34,7 @@ const Options: ThemeOptions = {
             fontWeight: 700,
         },
         h5: {
-            fontWeight: 600,
+            fontWeight: 700,
         },
         subtitle1: {
             fontFamily: 'Merriweather',

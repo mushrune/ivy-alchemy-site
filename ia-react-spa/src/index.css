@@ -12,9 +12,4 @@
             text-sm sm:text-2xl
             font-semibold sm:font-normal italic
     }
-
-    .horizontal-line {
-        @apply
-            bg-green-300 border-0 w-full h-px
-    }
 }

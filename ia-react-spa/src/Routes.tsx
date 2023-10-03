@@ -4,7 +4,7 @@ import { RouteObject, useNavigate } from "react-router-dom";
 import { Button, Typography } from "@mui/material";
 // Project imports:
 import App from "./App";
-import Home from "./Pages/Home";
+import Home, { homeLoader } from "./Pages/Home/Home";
 import About from "./Pages/About";
 import Booking from "./Pages/Booking";
 import Pricing from "./Pages/Pricing";
@@ -29,7 +29,7 @@ export const Routes: RouteObject[] = [
         path: "/",
         element: <App />,
         children: [
-            { index: true, element: <Home />},
+            { index: true, element: <Home /> },
             { path: "about", element: <About />},
             { path: "booking", element: <Booking />},
             { path: "pricing", element: <Pricing />},

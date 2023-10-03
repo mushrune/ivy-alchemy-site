@@ -12,6 +12,7 @@ import {
 } from "react-icons/tb";
 import { CgClose } from "react-icons/cg";
 import LeafIcon from "./Widgets/LeafIcon";
+import LeafSeperator from "./Widgets/LeafSeperator";
 
 /*
      note:
@@ -72,7 +73,7 @@ const Navigator: React.FC = () => {
         // This element acts as a spacer and contains the entire navigation menu
         <div style={{ height: `${offsetHeight}px`}} >
             {/*This element blocks the items on the webpage from being seen behind the navigator*/}
-            <div style={{ height: `${offsetHeight}px`}} className={`fixed top-0 w-full pb-8`} >
+            <div style={{ height: `${offsetHeight}px`}} className={`fixed top-0 w-full pb-8 z-10`} >
                 <div className="bg-background-color shadow-xl shadow-background-color h-full w-full" />
             </div>
             {/*This element contains the navigator, logo, menu, etc...*/}
@@ -87,7 +88,7 @@ const Navigator: React.FC = () => {
                         p-1 my-2
                         rounded-xl
                         mx-auto
-                        w-[90%]
+                        w-[95%]
                 `}>
                         <div className="flex sm:justify-evenly justify-evenly">
                             <IconButton className={`nav-button`} onClick={() => setMenu(!menu)}>
@@ -105,11 +106,7 @@ const Navigator: React.FC = () => {
                             </IconButton>
                         </div>
                         { menu && <div className="flex justify-center items-center flex-col px-3 h-fit">
-                            <div className="horizontal-line mx-8 mt-6 mb-5 flex justify-center items-center">
-                                <div className="bg-green-800 px-4 pt-2 text-primary">
-                                    <LeafIcon size={25} />
-                                </div>
-                            </div>
+                            <LeafSeperator />
                             <div className="grid grid-cols-2 gap-6 mb-4 w-full">
                                 <Button className="nav-button" onClick={() => handleNavigation("/")} startIcon={<TbHome size={25} />}>home</Button>
                                 <Button className="nav-button" onClick={() => handleNavigation("/about")} startIcon={<TbInfoHexagon size={25} />}>about</Button>
