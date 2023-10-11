@@ -8,10 +8,11 @@ import {
     TbMenu2,
     TbHome,
     TbInfoHexagon,
-    TbCurrencyDollar, TbFlare
+    TbCurrencyDollar, TbFlare, TbFirstAidKit
 } from "react-icons/tb";
 import { CgClose } from "react-icons/cg";
 import LeafSeperator from "./Widgets/LeafSeperator";
+import {handleLink} from "../Functions";
 
 /*
      note:
@@ -56,11 +57,6 @@ const Navigator: React.FC = () => {
     })
 
     const navigator = useNavigate();
-
-    // handler for navigating away from the site
-    const handleLink = ( link: string ) => {
-        window.open(link, '_blank', 'noreferrer')
-    }
 
     // handler for clicking a nav button, closes the menu
     const handleNavigation = ( to: string ) => {
@@ -111,6 +107,7 @@ const Navigator: React.FC = () => {
                                 <Button className="nav-button" onClick={() => handleNavigation("/about")} startIcon={<TbInfoHexagon size={25} />}>about</Button>
                                 <Button className="nav-button" onClick={() => handleNavigation("/pricing")} startIcon={<TbCurrencyDollar size={25} />}>pricing</Button>
                                 <Button className="nav-button" onClick={() => handleNavigation("/contact")} startIcon={<TbFlare size={25} />}>contact</Button>
+                                <Button className="nav-button" onClick={() => handleNavigation("/after-care")} startIcon={<TbFirstAidKit size={25} />}>after care</Button>
                             </div>
                         </div>}
                     </div>

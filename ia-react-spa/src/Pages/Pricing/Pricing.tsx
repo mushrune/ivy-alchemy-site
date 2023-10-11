@@ -4,6 +4,7 @@ import { TbCurrencyDollar } from "react-icons/tb";
 import LeafSeperator from "../../Components/Widgets/LeafSeperator";
 import {PricedItem} from "./Types";
 import Item from "./Components/Item";
+import PageContainer from "../../Components/PageContainer";
 
 const items: PricedItem[] = [
     { title: "Hourly Rate", description: "", price: 150, frequency: "hour" },
@@ -13,12 +14,7 @@ const items: PricedItem[] = [
 
 const Pricing: React.FC = () => {
     return(
-        <Paper className="p-4 rounded-2xl">
-            <div className="flex justify-between">
-                <Typography variant="h4">Pricing</Typography>
-                <TbCurrencyDollar size={40} />
-            </div>
-            <LeafSeperator />
+        <PageContainer title={'Pricing'} icon={<TbCurrencyDollar size={40} />}>
             { items.map( ( item, index ) =>
                 <Item key={index} item={item} />
             )}
@@ -34,7 +30,7 @@ const Pricing: React.FC = () => {
                 <br /><br />
                 For additional information, please read the <Link href="/booking/policy"> booking policy</Link>.
             </Typography>
-        </Paper>
+        </PageContainer>
     )
 }
 

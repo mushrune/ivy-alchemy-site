@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {Paper, Typography} from "@mui/material";
 import LeafSeperator from "../Components/Widgets/LeafSeperator";
 import {TbCurrencyDollar, TbInfoHexagon} from "react-icons/tb";
+import PageContainer from "../Components/PageContainer";
 
 const greetings: string[] = [
     "Meow,",
@@ -20,12 +21,7 @@ const About: React.FC = () => {
     const greeting = greetings[ Math.floor( Math.random() * greetings.length ) ]
 
     return(
-        <Paper className="p-6 rounded-2xl">
-            <div className="flex justify-between items-center">
-                <Typography variant="h4">{greeting} I'm Ivy.</Typography>
-                <TbInfoHexagon size={40} className="ml-2" />
-            </div>
-            <LeafSeperator />
+        <PageContainer title={`${greeting} I'm Ivy.`} icon={<TbInfoHexagon size={40} className="ml-2" />}>
             <div className="mt-4 max-w-md mx-auto">
                 <img src="./ivy.jpeg" alt="ivy alchemist" className="w-full rounded-lg" />
             </div>
@@ -40,7 +36,7 @@ const About: React.FC = () => {
                 <br />
                 Please do not bring me any gluten treats!
             </Typography>
-        </Paper>
+        </PageContainer>
     )
 }
 
