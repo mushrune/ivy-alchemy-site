@@ -5,6 +5,7 @@ export type FlashSheet = {
     url: string;
     title: string;
     tags: string[];
+    flash_pieces: FlashPiece[];
 }
 
 export type FlashPiece = {

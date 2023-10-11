@@ -1,15 +1,17 @@
-import React from 'react';
-import BrandLogo from "./Components/BrandLogo";
+import React, { useCallback, useRef, useState } from 'react';
 import Navigator from "./Components/Navigator";
-import {Outlet} from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Footer from "./Components/Footer";
 
-// Primarily handles routing and
+// Renders the application and any elements that persist throughout.
+// The height of the Outlet element is managed such that it is consistent throughout the site.
 const App: React.FC = () => {
     return (
-        <div className="App">
+        <div className="App flex flex-col min-h-screen">
             <Navigator />
-            <Outlet />
+            <div className="flex-1 w-[95%] max-w-7xl mx-auto">
+                <Outlet />
+            </div>
             <Footer />
         </div>
     );

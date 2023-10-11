@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useState} from 'react';
+import React, {memo, ReactElement, useEffect, useMemo, useState} from 'react';
 import { TbLeaf, TbBrandAmongUs, TbSeeding, TbHeart } from 'react-icons/tb';
 
 type ItemWeight = {
@@ -55,6 +55,6 @@ const LeafIcon: React.FC<props> = ({size}) => {
     index = randomItemSelect(items)
 
     return ( items[index].item )
-}
+};
 
-export default LeafIcon;
+export default memo(LeafIcon);

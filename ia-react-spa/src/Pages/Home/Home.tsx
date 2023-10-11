@@ -6,62 +6,69 @@ import { TbCirclePlus } from "react-icons/tb";
 import LeafSeperator from "../../Components/Widgets/LeafSeperator";
 import { FlashSheet, SearchOption } from './Types'
 import { computeSearchOptions, computeSelectedSheets } from "./Functions";
-import SearchSelector from "./SearchSelector";
-import FlashContainer from "./FlashContainer";
+import SearchSelector from "./Components/SearchSelector";
+import FlashContainer from "./Components/FlashContainer";
 import { useLoaderData } from "react-router-dom";
+import Loading from "../../Components/Loading";
+import Error from "../../Components/Error";
+import ToneSelector, { initialTone } from "./Components/ToneSelector";
 
 export const homeLoader = () => {
     return fetch('/api/flash/sheets');
 }
 
+
+// TODO: Reducer function to manipulate state logic
 const Home: React.FC = () => {
 
+    // States for managing the search features
     const [ selectedOptions, setSelectedOptions ] = useState<SearchOption[] | null>(null);
     const [ selectedSheets, setSelectedSheets ] = useState<FlashSheet[]>([]);
+    const [ flashSheets, setFlashSheets ] = useState<FlashSheet[]>([]);
+    // States for managing call to API
     const [ isLoading, setIsLoading ] = useState<boolean>(true);
     const [ error, setError ] = useState<string>("");
-    const [ flashSheets, setFlashSheets ] = useState<FlashSheet[]>([]);
+    // Other state ( for background tone )
+    const [ tone, setTone ] = useState<string>(initialTone)
 
-    const handleSelectionChange = ( event: any, value: SearchOption[] | null ) => setSelectedOptions(value)
+    const handleSelectionChange = ( event: any, value: SearchOption[] | null ) => {
+        setSelectedOptions(value)
+        setSelectedSheets( computeSelectedSheets( value, flashSheets ))
+    }
 
-    // this effect keeps the selected sheets state synced with the selected options state
-    useEffect(() => {
-        setSelectedSheets( computeSelectedSheets( selectedOptions, flashSheets ) )
-    }, [selectedOptions] )
+    const handleToneChange = ( value: string ) => setTone(value);
 
-    // this effect fetches the flash sheet data from the API
+    // Side effect for fetching data from the API
     useEffect( () => {
-
         fetch('/api/flash/sheets')
             .then( response => response.json() )
             .then( data => data as FlashSheet[] )
             .then( flashSheets => {
                 setFlashSheets(flashSheets)
                 setSelectedSheets(flashSheets)
+            })
+            .catch( () => {
+                setError("Unable to reach server. Please make sure you are connected to the internet.")
+            })
+            .finally( () => {
                 setIsLoading(false)
             })
-            .catch( reason => {
-                setError(reason)
-            });
     },[])
 
-    if ( isLoading ) {
-        return(
-            <div className="mx-auto">
-                <CircularProgress />
-            </div>
-        )
-    }
+    if ( error ) { return( <Error message={error} /> ) }
+
+    if ( isLoading ) { return( <Loading /> ) }
 
     return(
-        <div className="w-[95%] max-w-7xl mx-auto">
-            <SearchSelector
-                searchOptions={ computeSearchOptions(flashSheets) }
-                changeHandler={ handleSelectionChange }
-            />
-            <Paper className="rounded-lg px-2 overflow-hidden pt-4" elevation={3}>
+        <div>
+            <Paper className="rounded-2xl px-2 overflow-hidden pt-1" elevation={3}>
+                <SearchSelector
+                    searchOptions={ computeSearchOptions(flashSheets) }
+                    changeHandler={ handleSelectionChange }
+                />
+                <ToneSelector onChange={handleToneChange} />
                 { selectedSheets.map( ( flashSheet, index ) => (
-                    <FlashContainer flashSheet={flashSheet} index={index} key={index} showDivider={ selectedSheets.length - 1 != index } />
+                    <FlashContainer tone={tone} flashSheet={flashSheet} index={index} key={index} showDivider={ selectedSheets.length - 1 != index } />
                 ))}
             </Paper>
         </div>
