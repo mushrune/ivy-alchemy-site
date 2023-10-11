@@ -11,7 +11,6 @@ import {
     TbCurrencyDollar, TbFlare
 } from "react-icons/tb";
 import { CgClose } from "react-icons/cg";
-import LeafIcon from "./Widgets/LeafIcon";
 import LeafSeperator from "./Widgets/LeafSeperator";
 
 /*

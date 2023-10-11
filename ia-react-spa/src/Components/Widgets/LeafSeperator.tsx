@@ -3,7 +3,7 @@ import LeafIcon from "./LeafIcon";
 
 const LeafSeperator: React.FC = () => {
     return(
-        <div className="my-4 w-full flex justify-center items-center">
+        <div className="my-1 w-full flex justify-center items-center">
             <div className="bg-primary border-0 w-full h-px ml-2" />
             <div className="px-4 pt-2 text-primary">
                 <LeafIcon size={25} />

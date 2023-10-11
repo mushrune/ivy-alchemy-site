@@ -1,13 +1,13 @@
 // NPM imports:
 import React from 'react';
 import { RouteObject, useNavigate } from "react-router-dom";
-import { Button, Typography } from "@mui/material";
+import {Button, Paper, Typography} from "@mui/material";
 // Project imports:
 import App from "./App";
 import Home, { homeLoader } from "./Pages/Home/Home";
 import About from "./Pages/About";
 import Booking from "./Pages/Booking";
-import Pricing from "./Pages/Pricing";
+import Pricing from "./Pages/Pricing/Pricing";
 import Contact from "./Pages/Contact";
 
 // This component handles wildcard inputs. For now, I have it structured as a not found page that can direct you home.
@@ -15,11 +15,11 @@ const HandleWildcard: React.FC = () => {
     const navigator = useNavigate();
 
     return(
-        <div className="py-40 flex flex-col">
+        <Paper className="mt-20 mx-auto w-[80%] rounded-2xl flex flex-col p-4">
             <Typography variant="h4" className="text-center text-lg">Page not found... oops!</Typography>
-            <img src="./ripley.png" alt="Ripley the cat" className="w-36 mx-auto mt-6" />
-            <Button variant="outlined" onClick={() => {navigator("/")}} className="w-fit mx-auto my-10 lowercase">go home</Button>
-        </div>
+            <img src="/ripley.png" alt="Ripley the cat" className="w-36 mx-auto mt-6" />
+            <Button variant="outlined" onClick={() => {navigator("/")}} className="w-fit mx-auto mt-5 lowercase">go home</Button>
+        </Paper>
     )
 }
 

@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {Paper, Typography} from "@mui/material";
 import LeafSeperator from "../Components/Widgets/LeafSeperator";
+import {TbCurrencyDollar, TbInfoHexagon} from "react-icons/tb";
 
 const greetings: string[] = [
     "Meow,",
@@ -20,11 +21,14 @@ const About: React.FC = () => {
 
     return(
         <Paper className="p-6 rounded-2xl">
-            <Typography variant="h4">{greeting} I'm Ivy.</Typography>
-            <div className="mt-4 max-w-lg mx-auto">
-                <img src="./ivy.jpeg" alt="ivy alchemist" className="w-full rounded-lg" />
+            <div className="flex justify-between items-center">
+                <Typography variant="h4">{greeting} I'm Ivy.</Typography>
+                <TbInfoHexagon size={40} className="ml-2" />
             </div>
             <LeafSeperator />
+            <div className="mt-4 max-w-md mx-auto">
+                <img src="./ivy.jpeg" alt="ivy alchemist" className="w-full rounded-lg" />
+            </div>
             <Typography variant="body1">
                 I am a licensed tattoo artist established in Portland OR. My styles include
                 new school, blackwork and realism. I have tattood at multiple locations around PDX,
