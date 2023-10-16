@@ -4,7 +4,7 @@ import { RouteObject, useNavigate } from "react-router-dom";
 import {Button, Paper, Typography} from "@mui/material";
 // Project imports:
 import App from "./App";
-import Home, { homeLoader } from "./Pages/Home/Home";
+import Home from "./Pages/Home/Home";
 import About from "./Pages/About";
 import Booking from "./Pages/Booking";
 import Pricing from "./Pages/Pricing/Pricing";

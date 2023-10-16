@@ -21,3 +21,9 @@ export type SearchOption = {
     label: string;
     ids: number[];
 }
+
+// This type exists to help manage state of the tone selector between renders
+export type TonePosition = {
+    tone: string;
+    position: number;
+}

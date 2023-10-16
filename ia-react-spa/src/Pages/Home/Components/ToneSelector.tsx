@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import {createMuiTheme, createTheme, Slider as MuiSlider, styled} from "@mui/material";
+import { Slider } from "@mui/material";
+import {TonePosition} from "../Types";
 
 const tones = [
     "#3b2219",
@@ -49,26 +50,28 @@ function getToneFromSliderValue( value: number ): string {
     return rgbToHex( interpolatedRgb )
 }
 
-export const initialTone: string = getToneFromSliderValue( 0.5 );
+export const initialTone: TonePosition = { tone: getToneFromSliderValue( 0.25 ), position: 0.25 } as TonePosition
 
 interface props {
-    onChange: ( value: string ) => void;
+    onChange: ( value: TonePosition ) => void;
+    initialValue?: number;
 }
 
-const ToneSelector: React.FC<props> = ({ onChange }) => {
-    const [ value, setValue ] = useState<number>( 0.5 );
-    const [ tone, setTone ] = useState<string>( getToneFromSliderValue( 0.5 ) )
+const ToneSelector: React.FC<props> = ({ onChange, initialValue }) => {
+    const [ value, setValue ] = useState<number>( initialValue ?? 0.5 );
+    const [ tone, setTone ] = useState<string>( getToneFromSliderValue( initialValue ?? 0.5 ) )
 
     const handleSliderChange = ( event: Event, newValue: number | number[] ) => {
         const value = newValue as number;
-        onChange(getToneFromSliderValue(value))
-        setTone( getToneFromSliderValue( value ))
+        const tone = getToneFromSliderValue( value )
+        onChange( { position: value, tone: tone } as TonePosition )
+        setTone( tone )
         setValue(value)
     }
 
     return(
-        <div className="w-full flex justify-center" style={{ "--slider-color": tone } as React.CSSProperties }>
-            <MuiSlider value={value} step={0.01} onChange={handleSliderChange} sx={{ backgroundColor: tone }} min={0} max={1} className="w-[95%]" />
+        <div className="w-full flex justify-center px-4">
+            <Slider value={value} step={0.01} onChange={handleSliderChange} sx={{ color: tone }} min={0} max={1} className="w-[95%]" />
         </div>
     )
 }

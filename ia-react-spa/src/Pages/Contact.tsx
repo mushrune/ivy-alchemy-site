@@ -1,7 +1,6 @@
 import React, {ReactNode} from 'react';
-import {IconButton, Paper, Typography} from "@mui/material";
-import {TbBrandInstagram, TbClipboardCopy, TbCopy, TbFlare, TbMailHeart} from "react-icons/tb";
-import LeafSeperator from "../Components/Widgets/LeafSeperator";
+import { IconButton, Paper, Typography } from "@mui/material";
+import { TbBrandInstagram, TbClipboardCopy, TbCopy, TbFlare, TbMailHeart } from "react-icons/tb";
 import PageContainer from "../Components/PageContainer";
 import {handleLink} from "../Functions";
 
