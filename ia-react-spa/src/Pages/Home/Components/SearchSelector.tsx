@@ -40,16 +40,18 @@ const SearchSelector: React.FC<props> = (props) => {
                 onChange={props.changeHandler}
                 isOptionEqualToValue={ (option, value) => option.label === value.label }
                 multiple
-                className="my-2"
+                className=""
                 size="small"
                 disablePortal
                 options={props.searchOptions}
                 getOptionLabel={(option) => capitalizeWords( option.label ) }
                 id="flash-search"
                 renderOption={(props, option) => (
-                    <Box component="li" {...props} className="flex flex-col px-2">
-                        <Typography variant="h6">{capitalizeWords(option.label)}</Typography>
-                        <Typography variant="subtitle2" className="italic ml-2">{option.ids.length} { option.ids.length > 1 ? "flash sheets" : "flash sheet" }</Typography>
+                    <Box component="li" {...props} className="px-2" sx={{zIndex: 3}}>
+                        <div className="flex items-center">
+                            <Typography variant="h6" className="lowercase">{option.label}</Typography>
+                            <Typography variant="subtitle2" className="italic ml-2 flex-1 text-right">{option.ids.length} { option.ids.length > 1 ? "tattoos" : "tattoo" }</Typography>
+                        </div>
                         <div className="bg-primary border-0 w-full h-px" />
                     </Box>
                 )}

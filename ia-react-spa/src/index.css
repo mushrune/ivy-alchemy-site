@@ -12,4 +12,12 @@
             text-sm sm:text-2xl
             font-semibold sm:font-normal italic
     }
+
+    .slider-navigator {
+        @apply
+            disabled:opacity-0 disabled:cursor-default
+            border-0 border-none
+            backdrop-opacity-0 backdrop-blur-md bg-white/0 text-primary
+            transition ease-in-out duration-300
+    }
 }

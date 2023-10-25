@@ -14,7 +14,8 @@ module.exports = {
       colors: {
         'primary': muiTheme.palette.primary.main,
         'secondary': muiTheme.palette.secondary.main,
-        'background-color': muiTheme.palette.background.default
+        'background-color': muiTheme.palette.background.default,
+        'paper-color': muiTheme.palette.background.paper
       },
       animation: {
         bounce: 'bounce 7s infinite'

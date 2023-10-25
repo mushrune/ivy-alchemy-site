@@ -9,12 +9,15 @@ export function computeSearchOptions ( sheets: FlashSheet[] ): SearchOption[] {
         if ( accumulator.has(sheet.title) ) {
             // If the title exists in the accumulator, add the sheet id to that search option
             accumulator.get(sheet.title)!.push(sheet.id)
+            // flash sheets contain multiple tattoos, for each of the pices push their ids to the search selector
+            sheet.flash_pieces.forEach( ( piece ) => accumulator.get(sheet.title)!.push(sheet.id) )
         } else {
             // Add the title and the sheet id to the new search option
             accumulator.set(sheet.title, [sheet.id])
+            sheet.flash_pieces.forEach( ( piece ) => accumulator.get(sheet.title)!.push(sheet.id) )
         }
 
-        // handle / reduce tags using accumulator
+        // handle / reduce piece tags using accumulator
         for ( const tag of sheet.tags ) {
             if ( accumulator.has(tag)) {
                 // if the tag exists in the accumulator, add the sheet id to the search option for that tag

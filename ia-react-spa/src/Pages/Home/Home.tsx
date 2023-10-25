@@ -82,15 +82,15 @@ const Home: React.FC = () => {
     return(
         <Paper className="rounded-2xl px-2 overflow-hidden pt-1 max-w-2xl mx-auto" elevation={3}>
             {/* Container for the search selector and tone selector*/}
-            <div className="w-full p-2">
+            <div className="w-full pt-2 pb-4 sm:py-4">
                 { selector == selectorState.none && (
                     <span className="flex justify-between items-center w-full h-10">
                         <IconButton onClick={() => setSelector(selectorState.tone)} className="items-center">
-                            <div style={{ height: 30, width: 30 }} className="relative">
+                            <div style={{ height: 35, width: 35 }} className="relative">
                                 <div className="
                                     absolute top-0 right-0 left-0 bottom-0 rounded-full
                                 " style={{ backgroundColor: tonePosition.tone }} />
-                                <TbDropCircle size={30} className="
+                                <TbDropCircle size={35} className="
                                     absolute top-0 right-0 left-0 bottom-0 m-auto
                                     text-primary hover:text-white transition duration-300
                                 " />
@@ -98,7 +98,7 @@ const Home: React.FC = () => {
                         </IconButton>
                         <Typography variant="h5" className="italic text-primary text-2xl sm:text-4xl tracking-wide">flash</Typography>
                         <IconButton onClick={() => setSelector(selectorState.search)} className="text-primary">
-                            <TbSearch size={25} />
+                            <TbSearch size={30} />
                         </IconButton>
                     </span>
                 )}

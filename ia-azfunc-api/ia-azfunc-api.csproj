@@ -16,5 +16,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
+    <None Remove="Models\EndpointFunctions\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Models\EndpointFunctions\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="Models\EndpointFunctions\**" />
   </ItemGroup>
 </Project>

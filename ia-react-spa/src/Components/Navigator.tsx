@@ -68,11 +68,11 @@ const Navigator: React.FC = () => {
         // This element acts as a spacer and contains the entire navigation menu
         <div style={{ height: `${offsetHeight}px`}} >
             {/*This element blocks the items on the webpage from being seen behind the navigator*/}
-            <div style={{ height: `${offsetHeight}px`}} className={`fixed top-0 w-full pb-8 z-10`} >
+            <div style={{ height: `${offsetHeight}px`}} className={`fixed top-0 w-full pb-8 z-[1000]`} >
                 <div className="bg-background-color shadow-xl shadow-background-color h-full w-full" />
             </div>
             {/*This element contains the navigator, logo, menu, etc...*/}
-            <div  ref={menuHeightRef} className="w-screen fixed top-0 z-10">
+            <div  ref={menuHeightRef} className="w-screen fixed top-0 z-[1000]">
                 <div className="max-w-7xl mx-auto">
                     <BrandLogo />
                     <Typography variant="subtitle1" className="text-primary italic rounded-md px-2 text-center w-fit mx-auto">creatures of all sorts, for people of all sorts</Typography>
