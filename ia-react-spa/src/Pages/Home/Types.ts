@@ -20,6 +20,13 @@ export type FlashPiece = {
 export type SearchOption = {
     label: string;
     ids: number[];
+    count: number;
+}
+
+export type Filter = {
+    label: string;
+    type: string;
+    count: number;
 }
 
 // This type exists to help manage state of the tone selector between renders

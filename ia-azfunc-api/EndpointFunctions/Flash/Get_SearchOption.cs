@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using ia_azfunc_api.InternalFunctions.Flash;
 using ia_azfunc_api.Models.Flash.Search;
@@ -9,6 +10,8 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
+using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace ia_azfunc_api.EndpointFunctions.Flash
 {
@@ -16,23 +19,24 @@ namespace ia_azfunc_api.EndpointFunctions.Flash
     {
         [FunctionName(nameof(Get_SearchOptions))]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "flash/search_options")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "flash/search_filters")] HttpRequest req,
             ILogger log )
         {
             log.LogInformation($"Search options requested by {req.Host.Host}");
 
+            // TODO: Sanitize query
             string query = req.Query["query"];
+            query ??= "";
             
             // Load filters using loader
             var loader = new FlashLoader(
                 startingPage: 0,
-                searchFilters: new Filter[] { },
                 log: log
             );
-            var filters = await loader.LoadFilters();
+            var filters = await loader.LoadFilters(query);
             
             // Transform list of sheets with pieces into search option list
-            var responseBody = JsonSerializer.Serialize(filters);
+            var responseBody = JsonConvert.SerializeObject( filters );
             
             // Send list to client
             return new OkObjectResult(responseBody);

@@ -15,7 +15,7 @@ import {
 import {TbCirclePlus, TbDropCircle, TbDroplet, TbSearch} from "react-icons/tb";
 // project imports
 import LeafSeperator from "../../Components/Widgets/LeafSeperator";
-import {FlashSheet, SearchOption, TonePosition} from './Types'
+import {Filter, FlashSheet, SearchOption, TonePosition} from './Types'
 import { computeSearchOptions, computeSelectedSheets } from "./Functions";
 import SearchSelector from "./Components/SearchSelector";
 import FlashContainer from "./Components/FlashContainer";
@@ -24,6 +24,7 @@ import Loading from "../../Components/Loading";
 import Error from "../../Components/Error";
 import ToneSelector, { initialTone } from "./Components/ToneSelector";
 import {CgClose} from "react-icons/cg";
+import {CustomLinearProgress} from "../../Components/Widgets/CustomLinearProgress";
 
 export const homeLoader = () => {
     return fetch('/api/flash/sheets');
@@ -36,12 +37,10 @@ enum selectorState {
 };
 
 // TODO: Reducer function to manipulate state logic'
-// TODO: Fix carousel implementation
-// TODO: Condense slider and search
 const Home: React.FC = () => {
 
     // States for managing the search features
-    const [ selectedOptions, setSelectedOptions ] = useState<SearchOption[] | null>(null);
+    const [ filters, setFilters ] = useState<Filter[] | null>(null);
     const [ selectedSheets, setSelectedSheets ] = useState<FlashSheet[]>([]);
     const [ flashSheets, setFlashSheets ] = useState<FlashSheet[]>([]);
     // States for managing call to API
@@ -51,9 +50,9 @@ const Home: React.FC = () => {
     const [ tonePosition, setTonePosition ] = useState<TonePosition>(initialTone)
     const [ selector, setSelector ] = useState<selectorState>(selectorState.none)
 
-    const handleSelectionChange = ( event: any, value: SearchOption[] | null ) => {
-        setSelectedOptions(value)
-        setSelectedSheets( computeSelectedSheets( value, flashSheets ))
+    const handleSelectionChange = ( event: any, value: Filter[] | null ) => {
+        setFilters(value)
+        //setSelectedSheets( computeSelectedSheets( value, flashSheets ))
     }
 
     const handleToneChange = ( value: TonePosition ) => setTonePosition(value);
@@ -77,7 +76,21 @@ const Home: React.FC = () => {
 
     if ( error ) { return( <Error message={error} /> ) }
 
-    if ( isLoading ) { return( <Loading /> ) }
+    const flashContainer = (
+        <div>
+            { selectedSheets.map( ( flashSheet, index ) => (
+                <FlashContainer tone={tonePosition.tone} flashSheet={flashSheet} index={index} key={index} showDivider={ selectedSheets.length - 1 != index } />
+            ))}
+        </div>
+    )
+
+    const loading = (
+        <div className="m-auto mb-36 mt-32 w-fit flex flex-col items-center">
+            <img src="./ripley.png" alt="ripley" className="w-20 mt-4 animate-pulse" style={{ filter: "grayscale(100%) invert(90%) sepia(15%) saturate(1157%) hue-rotate(75deg) brightness(99%) contrast(89%)" }} />
+            <Typography variant="h5" color="primary" className="m-2">loading...</Typography>
+            <CustomLinearProgress className="w-full" />
+        </div>
+    )
 
     return(
         <Paper className="rounded-2xl px-2 overflow-hidden pt-1 max-w-2xl mx-auto" elevation={3}>
@@ -105,9 +118,8 @@ const Home: React.FC = () => {
                 { selector == selectorState.search && (
                     <span className="flex justify-between items-center w-full h-fit">
                         <SearchSelector
-                            searchOptions={ computeSearchOptions(flashSheets) }
                             changeHandler={ handleSelectionChange }
-                            selectedOptions={ selectedOptions }
+                            selectedFilters={ filters }
                         />
                         <IconButton onClick={() => setSelector(selectorState.none)}>
                             <CgClose className="text-primary hover:text-white transition duration-300" size={25} />
@@ -123,9 +135,7 @@ const Home: React.FC = () => {
                     </span>
                 )}
             </div>
-            { selectedSheets.map( ( flashSheet, index ) => (
-                <FlashContainer tone={tonePosition.tone} flashSheet={flashSheet} index={index} key={index} showDivider={ selectedSheets.length - 1 != index } />
-            ))}
+            { isLoading ? loading : flashContainer }
         </Paper>
     )
 }

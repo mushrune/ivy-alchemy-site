@@ -8,7 +8,6 @@ using ia_azfunc_api.Models.Flash.Search;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
 using Microsoft.Extensions.Logging;
-using Type = ia_azfunc_api.Models.Flash.Search.Type;
 
 namespace ia_azfunc_api.InternalFunctions.Flash;
 
@@ -21,10 +20,58 @@ public class FlashLoader
     private Container _sheetContainer { get; set;}
     private Container _pieceContainer { get; set;}
     
+    private async Task<Sheet[]> _searchSheets(string query )
+    {
+        var sqlQuery = new QueryDefinition(query: "SELECT * FROM c");
+        
+        if (query != "")
+        {
+            sqlQuery = new QueryDefinition(
+                    // TODO: ARRAY_CONTAINS is not sufficient here. Need a way to search the array of tags that includes incomplete matches
+                    query: "SELECT * FROM c WHERE CONTAINS(LOWER(c.title), @search_query) OR ARRAY_CONTAINS(c.tags, @search_query)"
+                )
+                .WithParameter("@search_query", query);
+        }
+
+        using FeedIterator<Sheet> sheetFeed = _sheetContainer.GetItemQueryIterator<Sheet>(queryDefinition: sqlQuery);
+        var sheetAccumulator = new List<Sheet>();
+        while (sheetFeed.HasMoreResults)
+        {
+            FeedResponse<Sheet> piecePage = await sheetFeed.ReadNextAsync();
+            sheetAccumulator.AddRange( (Sheet[]) piecePage );
+        }
+
+        _log.LogCritical("Sheets searched.");
+        return sheetAccumulator.ToArray();
+    }
+    
+    private async Task<Piece[]> _searchPieces(string query)
+    {        
+        var sqlQuery = new QueryDefinition(query: "SELECT * FROM c");
+        
+        if (query != "")
+        {
+            sqlQuery = new QueryDefinition(
+                    query: "SELECT * FROM c WHERE CONTAINS(LOWER(c.title), @search_query) OR ARRAY_CONTAINS(c.tags, @search_query)"
+                )
+                .WithParameter("@search_query", query);
+        }
+
+        using FeedIterator<Piece> pieceFeed = _pieceContainer.GetItemQueryIterator<Piece>(queryDefinition: sqlQuery);
+        var pieceAccumulator = new List<Piece>();
+        while (pieceFeed.HasMoreResults)
+        {
+            FeedResponse<Piece> piecePage = await pieceFeed.ReadNextAsync();
+            pieceAccumulator.AddRange( (Piece[]) piecePage );
+        }
+
+        _log.LogCritical("Flash pieces searched.");
+        return pieceAccumulator.ToArray();
+    }
+    
     // Instantiates a class that can load flash data
     public FlashLoader(
         int startingPage,
-        Filter[] searchFilters,
         ILogger log
     )
     {
@@ -37,12 +84,12 @@ public class FlashLoader
     }
     
     // This method returns a list of search filters given a search criteria
-    public async Task<Filter[]> LoadFilters()
+    public async Task<Filter[]> LoadFilters( string searchQuery )
     {
         _log.LogCritical($"Loading search filters");
 
-        Task<Piece[]> pieceTask = LoadPieces();
-        Task<Sheet[]> sheetTask = LoadSheets();
+        Task<Piece[]> pieceTask = _searchPieces(searchQuery);
+        Task<Sheet[]> sheetTask = _searchSheets(searchQuery);
 
         await Task.WhenAll( pieceTask, sheetTask );
 
@@ -60,7 +107,7 @@ public class FlashLoader
                 .Select( t => new Filter()
                 {
                     Label = t,
-                    Type = Type.Tag
+                    Type = FilterType.Tag
                 })
         );
         
@@ -69,7 +116,7 @@ public class FlashLoader
             pieces.Select( p => new Filter()
             {
                 Label = p.Title,
-                Type = Type.Piece
+                Type = FilterType.Piece
             })
         );
         
@@ -80,19 +127,33 @@ public class FlashLoader
                 .Select( t => new Filter()
                 {
                     Label = t,
-                    Type = Type.Tag
+                    Type = FilterType.Tag
                 })
         );
         
-        // Add sheet titles
+        // Add sheet filters
         filters.AddRange(
             sheets.Select( s => new Filter()
                 {
                     Label = s.Title,
-                    Type = Type.Sheet
+                    Type = FilterType.Sheet,
+                    Count = s.PieceIds.Length
                 })
         );
+        
 
+        // Sort out the count value for each of the tags. ( count shows how many pieces / sheets have that tag )
+        filters = filters
+            // Count = how many times the tag appears in the list ( thats how many sheets / pieces have it )
+            .Select(f => {
+                if (f.Type == FilterType.Tag)
+                {
+                    f.Count = filters.Count( fi => fi.Label == f.Label );
+                }
+                return f;
+            })
+            .Distinct( new FilterComparer() )
+            .ToList();
 
         return filters.ToArray();
     }
@@ -118,9 +179,26 @@ public class FlashLoader
     }
     
     // This method loads sheets from cosmos and optionally populates them with flash data
-    public async Task<Sheet[]> LoadSheets( bool populate = false )
+    public async Task<Sheet[]> LoadSheets( Filter[] filters, bool populate = false )
     {
         _log.LogCritical($"Loading {( populate ? "populated" : "unpopulated" )} sheets.");
+
+        string[] sheetTitles = filters
+            .Where(f => f.Type == FilterType.Sheet)
+            .Select(f => f.Label)
+            .ToArray();
+
+        string[] pieceTitles = filters
+            .Where( f => f.Type == FilterType.Piece )
+            .Select( f => f.Label )
+            .ToArray();
+
+        string[] tags = filters
+            .Where( f => f.Type == FilterType.Tag )
+            .Select( f => f.Label )
+            .ToArray();
+        
+        _log.LogCritical($"{tags.Length} tags - {pieceTitles.Length} peices - {sheetTitles.Length} sheets");
         
         // Setup sheet feed
         using FeedIterator<Sheet> sheetFeed = _sheetContainer.GetItemQueryIterator<Sheet>(
