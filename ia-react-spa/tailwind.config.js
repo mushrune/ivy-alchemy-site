@@ -18,9 +18,19 @@ module.exports = {
         'paper-color': muiTheme.palette.background.paper
       },
       animation: {
-        bounce: 'bounce 7s infinite'
+        bounce: 'bounce 7s infinite',
+        marquee_start: 'marquee_start 7s linear infinite',
+        marquee_end: 'marquee_end 7s linear infinite'
       },
       keyframes: {
+        marquee_start: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
+        marquee_end: {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(0%)' },
+        },
         bounce: {
           '0%, 100%': { transform: 'translateY(0)', animationTimingFunction: 'linear' },
           '50%': { transform: 'translateY(-20%)', animationTimingFunction: 'linear' }

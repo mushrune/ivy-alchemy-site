@@ -22,7 +22,7 @@ namespace ia_azfunc_api.EndpointFunctions.Flash
         // This function runs when the endpoint is called via HTTP.
         [FunctionName(nameof(EndpointFunctions.Flash.Get_Sheets))]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "flash/sheets")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "flash/sheets")] HttpRequest req,
             ILogger log )
         {
             log.LogInformation($"Flash sheets requested by {req.Host.Host}");

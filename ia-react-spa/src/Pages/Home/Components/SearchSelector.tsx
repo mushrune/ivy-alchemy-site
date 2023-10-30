@@ -31,20 +31,10 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
     }
 }));
 
-function sleep(duration: number): Promise<void> {
-    return new Promise<void>((resolve) => {
-        setTimeout(() => {
-            resolve();
-        }, duration);
-    });
-}
-
-
-
 const SearchSelector: React.FC<props> = (props) => {
 
     const [ open, setOpen ] = useState<boolean>(false);
-    const [ filters, setFilters ] = useState<readonly Filter[]>([]);
+    const [ filters, setFilters ] = useState<Filter[]>([]);
     const [ error, setError ] = useState<string>("");
     const loading = open && filters.length === 0;
 
@@ -55,7 +45,7 @@ const SearchSelector: React.FC<props> = (props) => {
             return undefined;
         }
 
-        ( async () => {
+        if ( filters.length === 0 ) {( async () => {
             let filters: Filter[] = [];
 
             // fetch search options here
@@ -72,23 +62,18 @@ const SearchSelector: React.FC<props> = (props) => {
                 })
 
             if (active) { setFilters(filters) }
-        })();
+        })()};
 
         return () => {
             active = false;
         }
     }, [loading])
 
-    useEffect( () => {
-        if (!open) {
-            setFilters([]);
-        }
-    }, [open] )
-
     return(
         <div className="flex-1">
             <Autocomplete
                 value={ props.selectedFilters === null ? [] : props.selectedFilters }
+                disableCloseOnSelect
                 onChange={ props.changeHandler }
                 onOpen={() => setOpen(true)}
                 onClose={() => setOpen(false)}
