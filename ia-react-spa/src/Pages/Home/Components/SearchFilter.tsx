@@ -7,8 +7,10 @@ interface props {
 }
 
 const SearchFilter: React.FC<props> = ({filter}) => {
+    console.log(filter.type);
+
     // filter type sheet
-    if ( filter.type === "sheet" ) return(
+    if ( filter.type === "sheet_title" ) return(
         <div className="flex items-center">
             <Chip label="sheet" size="small" className="mr-1 italic" />
             <Typography variant="h6" className="lowercase">{filter.label}</Typography>
@@ -18,7 +20,7 @@ const SearchFilter: React.FC<props> = ({filter}) => {
     );
 
     // filter type piece
-    if ( filter.type === "piece") return(
+    if ( filter.type === "piece_title") return(
         <div className="flex items-center">
             <Chip label="piece" size="small" className="mr-1 italic" />
             <Typography variant="h6" className="lowercase">{filter.label}</Typography>

@@ -9,8 +9,9 @@ namespace ia_azfunc_api.Models.Flash.Search;
 public class FilterType : FriendlyEnum
 {
     private FilterType(string value) : base(value) { }
-    public static FilterType Sheet => new FilterType("sheet");
-    public static FilterType Tag => new FilterType("tag");
-    public static FilterType Piece => new FilterType("piece");
+    public static FilterType SheetTitle => new FilterType("sheet_title");
+    public static FilterType PieceTag => new FilterType("piece_tag");
+    public static FilterType SheetTag => new FilterType("sheet_tag");
+    public static FilterType PieceTitle => new FilterType("piece_title");
 }
 

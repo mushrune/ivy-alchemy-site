@@ -15,8 +15,7 @@ import {
 import {TbCirclePlus, TbDropCircle, TbDroplet, TbSearch} from "react-icons/tb";
 // project imports
 import LeafSeperator from "../../Components/Widgets/LeafSeperator";
-import {Filter, FlashSheet, SearchOption, TonePosition} from './Types'
-import { computeSearchOptions, computeSelectedSheets } from "./Functions";
+import {Filter, FlashSheet, TonePosition} from './Types'
 import SearchSelector from "./Components/SearchSelector";
 import FlashContainer from "./Components/FlashContainer";
 import { useLoaderData } from "react-router-dom";
@@ -26,6 +25,7 @@ import ToneSelector, { initialTone } from "./Components/ToneSelector";
 import {CgClose} from "react-icons/cg";
 import {CustomLinearProgress} from "../../Components/Widgets/CustomLinearProgress";
 import MarqueeText from "../../Components/Widgets/MarqueeText";
+import {FaRegFaceMehBlank} from "react-icons/fa6";
 
 export const homeLoader = () => {
     return fetch('/api/flash/sheets');
@@ -61,16 +61,23 @@ const Home: React.FC = () => {
     useEffect( () => {
         ( async () => {
             setIsLoading(true);
-            const raw = await fetch('/api/flash/sheets', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(filters)
-            });
-            const content = await raw.json();
-            const sheets = JSON.parse( content ) as FlashSheet[];
+            let sheets: FlashSheet[] = [];
+            try {
+                const raw = await fetch('/api/flash/sheets', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(filters)
+                });
+                const content = await raw.json();
+                sheets = JSON.parse(content) as FlashSheet[];
+            } catch ( e ) {
+                setError("Could not load flash sheets. Please ensure you are connected to the internet. Meow!");
+                console.log(e)
+            }
+
             setFlashSheets(sheets);
             setIsLoading(false);
         })();
@@ -102,10 +109,11 @@ const Home: React.FC = () => {
                                 <div className="
                                     absolute top-0 right-0 left-0 bottom-0 rounded-full
                                 " style={{ backgroundColor: tonePosition.tone }} />
-                                <TbDropCircle size={35} className="
+                                <FaRegFaceMehBlank size={30} className={`
                                     absolute top-0 right-0 left-0 bottom-0 m-auto
-                                    text-primary hover:text-white transition duration-300
-                                " />
+                                    ${ tonePosition.position <= 0.5 ? "text-primary" : "text-paper-color" }
+                                    transition duration-300
+                                `} />
                             </div>
                         </IconButton>
                         <MarqueeText text="flash sheets" />

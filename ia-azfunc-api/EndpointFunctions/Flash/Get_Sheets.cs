@@ -35,8 +35,7 @@ namespace ia_azfunc_api.EndpointFunctions.Flash
              * I could use an input binding for this, but this flash loader class gives me precise control
              * over the cosmos db interactions for pagination, search options, queries, etc..
              */
-            var loader = new FlashLoader(
-                startingPage: 0,
+            var loader = new SheetLoader(
                 log: log
             );
             Sheet[] sheets = await loader.LoadSheets( populate: true, filters: filters );

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Filter, FlashSheet, SearchOption} from '../Types'
+import { Filter, FlashSheet } from '../Types'
 import {
     Autocomplete,
     AutocompleteProps,
@@ -101,7 +101,7 @@ const SearchSelector: React.FC<props> = (props) => {
                         endAdornment: (
                             <React.Fragment>
                                 { loading ? <CircularProgress color="inherit" size={20} /> : null }
-                                {params.InputProps.endAdornment}
+                                { params.InputProps.endAdornment }
                             </React.Fragment>
                         )
                     }}

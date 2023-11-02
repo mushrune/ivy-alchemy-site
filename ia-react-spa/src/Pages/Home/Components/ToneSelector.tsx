@@ -50,7 +50,8 @@ function getToneFromSliderValue( value: number ): string {
     return rgbToHex( interpolatedRgb )
 }
 
-export const initialTone: TonePosition = { tone: getToneFromSliderValue( 0.25 ), position: 0.25 } as TonePosition
+const initPos = ( Math.random() / 3 ) + 0.33
+export const initialTone: TonePosition = { tone: getToneFromSliderValue( initPos ), position: initPos } as TonePosition
 
 interface props {
     onChange: ( value: TonePosition ) => void;

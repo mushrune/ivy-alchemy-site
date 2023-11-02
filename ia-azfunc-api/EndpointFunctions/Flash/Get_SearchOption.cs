@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using ia_azfunc_api.InternalFunctions;
 using Newtonsoft.Json;
 
 namespace ia_azfunc_api.EndpointFunctions.Flash
@@ -24,15 +25,12 @@ namespace ia_azfunc_api.EndpointFunctions.Flash
         {
             log.LogInformation($"Search options requested by {req.Host.Host}");
 
-            // TODO: Sanitize query
             string query = req.Query["query"];
             query ??= "";
+            query = SqlFunctions.SanitizeInput( query );
             
             // Load filters using loader
-            var loader = new FlashLoader(
-                startingPage: 0,
-                log: log
-            );
+            var loader = new FilterLoader( log: log );
             var filters = await loader.LoadFilters(query);
             
             // Transform list of sheets with pieces into search option list
