@@ -7,7 +7,6 @@ interface props {
 }
 
 const MarqueeText: React.FC<props> = ({text}) => {
-    // TODO: Create ref to link the width of the parent to the width of one of the text boxes
     // TODO: Inherit color of shaded transparent border elements to inherit from the main element ( solves elevated paper issue )
 
     const [ limitMotion, setLimitMotion ] = useState<boolean>(false);
@@ -43,13 +42,13 @@ const MarqueeText: React.FC<props> = ({text}) => {
     }, [])
     // if the user prefers limited motion, disable the marque and return something else that doesn't move.
     if ( limitMotion ) { return(
-        <Typography variant="h5" className="px-4 whitespace-nowrap italic text-primary text-2xl sm:text-4xl tracking-wide">{text}</Typography>
+        <Typography variant="h5" className="px-4 whitespace-nowrap italic text-primary text-2xl sm:text-4xl tracking-wide select-none">{text}</Typography>
     )}
 
     return(
         <div className="overflow-hidden h-fit flex relative mx-auto" style={{ width: parentWidth }}>
-            <Typography ref={textRef} variant="h5" className="animate-marquee_start px-4 whitespace-nowrap italic text-primary text-3xl sm:text-4xl tracking-wide">{text}</Typography>
-            <Typography variant="h5" className="animate-marquee_end px-4 absolute top-0 whitespace-nowrap italic text-primary text-3xl sm:text-4xl tracking-wide">{text}</Typography>
+            <Typography ref={textRef} variant="h5" className="animate-marquee_start px-4 whitespace-nowrap italic text-primary text-3xl sm:text-4xl tracking-wide select-none">{text}</Typography>
+            <Typography variant="h5" className="animate-marquee_end px-4 absolute top-0 whitespace-nowrap italic text-primary text-3xl sm:text-4xl tracking-wide select-none">{text}</Typography>
             <div className="absolute left-0 w-10 h-full" style={{ background: `linear-gradient(to left, transparent, ${Options.palette?.background?.paper})`}} />
             <div className="absolute right-0 w-10 h-full" style={{ background: `linear-gradient(to right, transparent, ${Options.palette?.background?.paper})`}} />
         </div>

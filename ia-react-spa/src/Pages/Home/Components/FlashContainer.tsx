@@ -26,8 +26,10 @@ function getRandomFramePath(): string {
 
 const FlashContainer: React.FC<props> = ({ flashSheet, showDivider, index, tone }) => {
 
-    const [ framePath, setFramePath ] = useState<string>( getRandomFramePath() );
+    // bool that shows if the sheet's pieces have been filtered. The component behaves differently if this is true.
+    const isFiltered = flashSheet.piece_ids.length > flashSheet.flash_pieces.length
 
+    const [ framePath, setFramePath ] = useState<string>( getRandomFramePath() );
     const [ flashSheetState, setFlashSheetState ] = useState<FlashSheet>( flashSheet );
 
     useEffect( () => {
@@ -49,7 +51,7 @@ const FlashContainer: React.FC<props> = ({ flashSheet, showDivider, index, tone 
                 naturalSlideWidth={30}
                 totalSlides={ flashSheet.flash_pieces.length + 1 }
                 isIntrinsicHeight
-                isPlaying
+                currentSlide={ isFiltered ? 1 : 0 }
             >
                 <div className="relative w-full">
                     <div className="w-full">

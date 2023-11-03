@@ -12,7 +12,7 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import {TbCirclePlus, TbDropCircle, TbDroplet, TbSearch} from "react-icons/tb";
+import {TbArrowBackUp, TbCirclePlus, TbDropCircle, TbDroplet, TbSearch} from "react-icons/tb";
 // project imports
 import LeafSeperator from "../../Components/Widgets/LeafSeperator";
 import {Filter, FlashSheet, TonePosition} from './Types'
@@ -129,7 +129,7 @@ const Home: React.FC = () => {
                             selectedFilters={ filters }
                         />
                         <IconButton onClick={() => setSelector(selectorState.none)}>
-                            <CgClose className="text-primary hover:text-white transition duration-300" size={25} />
+                            <TbArrowBackUp className="text-primary hover:text-white transition duration-300" size={25} />
                         </IconButton>
                     </span>
     );

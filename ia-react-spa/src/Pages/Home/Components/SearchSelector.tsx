@@ -61,6 +61,9 @@ const SearchSelector: React.FC<props> = (props) => {
                 .finally( () => {
                 })
 
+            // order filters by count
+            filters = filters.sort( (a, b) => b.count - a.count );
+
             if (active) { setFilters(filters) }
         })()};
 

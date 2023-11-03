@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useLayoutEffect, useState} from 'react';
 import {
     Backdrop,
     Button, IconButton, Paper,
@@ -8,8 +8,8 @@ import {ButtonBack, ButtonNext, CarouselContext} from 'pure-react-carousel';
 import {FlashPiece, FlashSheet} from "../Types";
 import {TbArrowBigLeft, TbArrowBigRight} from "react-icons/tb";
 import { CustomLinearProgress } from "../../../Components/Widgets/CustomLinearProgress";
-import {CgClose} from "react-icons/cg";
 import SheetInfo from "./SheetInfo";
+import {Transition} from "@headlessui/react";
 
 interface props {
     flashSheet: FlashSheet
@@ -26,20 +26,27 @@ const FlashController: React.FC<props> = ({ flashSheet }) => {
     const [ currentSlide, setCurrentSlide ] = useState(carouselContext.state.currentSlide);
     const [ currentPiece, setCurrentPiece ] = useState<FlashPiece | null>(null)
     const [ infoOpen, setInfoOpen ] = useState<boolean>(false);
+
+    function handleCarouselChange() {
+        setCurrentSlide(carouselContext.state.currentSlide);
+        const pieceIndex = carouselContext.state.currentSlide - 1
+        if ( pieceIndex >= 0 ) {
+            setCurrentPiece(flashSheet.flash_pieces[pieceIndex])
+        } else {
+            setCurrentPiece(null);
+        }
+    }
     const handleInfoClose = () => setInfoOpen(false)
     const handleInfoOpen = () => setInfoOpen(true)
 
+    // ensures correct title and descriptor show on render
+    useEffect( () => { handleCarouselChange() }, [] )
 
+    // changes title and descriptor each time carousel state changes
     useEffect( () => {
-        function onChange() {
-            setCurrentSlide(carouselContext.state.currentSlide);
-            const pieceIndex = carouselContext.state.currentSlide - 1
-            if ( pieceIndex >= 0 ) { setCurrentPiece(flashSheet.flash_pieces[pieceIndex]) }
-            else { setCurrentPiece(null) }
-        }
-        carouselContext.subscribe(onChange);
+        carouselContext.subscribe(handleCarouselChange);
 
-        return () => carouselContext.unsubscribe(onChange);
+        return () => carouselContext.unsubscribe(handleCarouselChange);
     }, [carouselContext])
 
     const sheetDescriptor = (
@@ -71,11 +78,17 @@ const FlashController: React.FC<props> = ({ flashSheet }) => {
                     onClick={() => console.log(currentPiece?.title)}
                 ><TbArrowBigRight size={30} className="transform rotate-90" /></ButtonNext>
             </div>
-            { currentPiece !== null &&
-                <div className="w-full h-10 flex items-center mt-2">
-                    <Button variant="outlined" size="small" onClick={handleInfoOpen} className="flex-1 lowercase italic mx-1">info</Button>
+            <Transition
+                show={ currentPiece !== null }
+                className="transition-all duration-500"
+                enter="ease-in-out" enterFrom="max-h-0 opacity-0" enterTo="max-h-10 opacity-100"
+                leave="ease-out" leaveFrom="max-h-10 opacity-100" leaveTo="max-h-0 opacity-0"
+            >
+                <div className={`w-full overflow-hidden h-10 max-h-16 flex items-center`}>
+                    <Button variant="outlined" size="small" onClick={handleInfoOpen} className="flex-1 lowercase italic mx-1 mt-auto">info</Button>
+                    <Button variant="contained" size="small" onClick={handleInfoOpen} className="flex-1 lowercase italic mx-1 mt-auto">book</Button>
                 </div>
-            }
+            </Transition>
             <Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={infoOpen}

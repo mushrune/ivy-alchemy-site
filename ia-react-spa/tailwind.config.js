@@ -20,7 +20,9 @@ module.exports = {
       animation: {
         bounce: 'bounce 7s infinite',
         marquee_start: 'marquee_start 7s linear infinite',
-        marquee_end: 'marquee_end 7s linear infinite'
+        marquee_end: 'marquee_end 7s linear infinite',
+        grow: 'grow 0.5s forwards',
+        shrink: 'shrink 0.5s forwards'
       },
       keyframes: {
         marquee_start: {
@@ -34,6 +36,14 @@ module.exports = {
         bounce: {
           '0%, 100%': { transform: 'translateY(0)', animationTimingFunction: 'linear' },
           '50%': { transform: 'translateY(-20%)', animationTimingFunction: 'linear' }
+        },
+        grow: {
+          '0%': { 'max-height': '0px', 'opacity': '0' },
+          '100%': { 'max-height': '50px', 'opacity': '1' }
+        },
+        shrink: {
+          '0%': { 'max-height': '50px', 'opacity': '1' },
+          '100%': { 'max-height': '0px', 'opacity': '0' }
         }
       },
     }

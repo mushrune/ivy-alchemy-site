@@ -7,6 +7,7 @@ export type FlashSheet = {
     title: string;
     tags: string[];
     flash_pieces: FlashPiece[];
+    piece_ids: string;
 }
 
 export type FlashPiece = {
