@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Filter, FlashSheet } from '../Types'
+import { Filter } from '../Types'
 import {
     Autocomplete,
     AutocompleteProps,

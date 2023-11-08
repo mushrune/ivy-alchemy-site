@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlashPiece, FlashSheet} from "../Types";
+import {FlashPiece, FlashSheet} from "../../../Types";
 import {IconButton, Paper, Typography} from "@mui/material";
 import {CgClose} from "react-icons/cg";
 

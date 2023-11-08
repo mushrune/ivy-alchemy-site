@@ -1,15 +1,17 @@
-import React, {useContext, useEffect, useLayoutEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
     Backdrop,
-    Button, IconButton, Paper,
+    Button,
     Typography
 } from "@mui/material";
 import {ButtonBack, ButtonNext, CarouselContext} from 'pure-react-carousel';
-import {FlashPiece, FlashSheet} from "../Types";
+import { FlashPiece, FlashSheet } from "../../../Types";
 import {TbArrowBigLeft, TbArrowBigRight} from "react-icons/tb";
 import { CustomLinearProgress } from "../../../Components/Widgets/CustomLinearProgress";
 import SheetInfo from "./SheetInfo";
 import {Transition} from "@headlessui/react";
+import {usePieceContext} from "../../../Providers/SelectedPieceProvider";
+import {useNavigate} from "react-router-dom";
 
 interface props {
     flashSheet: FlashSheet
@@ -26,6 +28,16 @@ const FlashController: React.FC<props> = ({ flashSheet }) => {
     const [ currentSlide, setCurrentSlide ] = useState(carouselContext.state.currentSlide);
     const [ currentPiece, setCurrentPiece ] = useState<FlashPiece | null>(null)
     const [ infoOpen, setInfoOpen ] = useState<boolean>(false);
+
+    const { selectedPiece, setSelectedPiece } = usePieceContext();
+    const navigator = useNavigate();
+
+    const handleSelectPiece = () => {
+        if ( currentPiece !== null ) {
+            setSelectedPiece(currentPiece)
+        }
+        navigator("/booking")
+    }
 
     function handleCarouselChange() {
         setCurrentSlide(carouselContext.state.currentSlide);
@@ -86,7 +98,7 @@ const FlashController: React.FC<props> = ({ flashSheet }) => {
             >
                 <div className={`w-full overflow-hidden h-10 max-h-16 flex items-center`}>
                     <Button variant="outlined" size="small" onClick={handleInfoOpen} className="flex-1 lowercase italic mx-1 mt-auto">info</Button>
-                    <Button variant="contained" size="small" onClick={handleInfoOpen} className="flex-1 lowercase italic mx-1 mt-auto">book</Button>
+                    <Button variant="contained" size="small" onClick={handleSelectPiece} className="flex-1 lowercase italic mx-1 mt-auto">book</Button>
                 </div>
             </Transition>
             <Backdrop

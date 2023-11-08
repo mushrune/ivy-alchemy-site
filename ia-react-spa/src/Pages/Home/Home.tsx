@@ -14,18 +14,17 @@ import {
 } from "@mui/material";
 import {TbArrowBackUp, TbCirclePlus, TbDropCircle, TbDroplet, TbSearch} from "react-icons/tb";
 // project imports
-import LeafSeperator from "../../Components/Widgets/LeafSeperator";
-import {Filter, FlashSheet, TonePosition} from './Types'
+import { Filter } from './Types'
 import SearchSelector from "./Components/SearchSelector";
 import FlashContainer from "./Components/FlashContainer";
-import { useLoaderData } from "react-router-dom";
-import Loading from "../../Components/Loading";
 import Error from "../../Components/Error";
-import ToneSelector, { initialTone } from "./Components/ToneSelector";
-import {CgClose} from "react-icons/cg";
-import {CustomLinearProgress} from "../../Components/Widgets/CustomLinearProgress";
+import ToneSelector from "../../Components/ToneSelector";
+import { CgClose } from "react-icons/cg";
 import MarqueeText from "../../Components/Widgets/MarqueeText";
-import {FaRegFaceMehBlank} from "react-icons/fa6";
+import { FaRegFaceMehBlank } from "react-icons/fa6";
+import LoadingWidget from "../../Components/Widgets/LoadingWidget";
+import { useToneContext } from "../../Providers/ToneProvider";
+import { FlashSheet, TonePosition } from "../../Types";
 
 export const homeLoader = () => {
     return fetch('/api/flash/sheets');
@@ -37,7 +36,7 @@ enum selectorState {
     search
 };
 
-// TODO: Reducer function to manipulate state logic'
+// TODO: Reducer function to manipulate state logic
 const Home: React.FC = () => {
 
     // States for managing the search features
@@ -47,15 +46,16 @@ const Home: React.FC = () => {
     const [ isLoading, setIsLoading ] = useState<boolean>(true);
     const [ error, setError ] = useState<string>("");
     // Page states
-    const [ tonePosition, setTonePosition ] = useState<TonePosition>(initialTone)
     const [ selector, setSelector ] = useState<selectorState>(selectorState.none)
+
+    const { tone, setTone } = useToneContext();
 
     const handleSelectionChange = ( event: any, value: Filter[] | null ) => {
         setFilters(value)
         //setSelectedSheets( computeSelectedSheets( value, flashSheets ))
     }
 
-    const handleToneChange = ( value: TonePosition ) => setTonePosition(value);
+    const handleToneChange = ( value: TonePosition ) => setTone(value);
 
     // Side effect for fetching data from the API
     useEffect( () => {
@@ -89,15 +89,8 @@ const Home: React.FC = () => {
     const flashContainer = (
         <div>
             { flashSheets.map( ( flashSheet, index ) => (
-                <FlashContainer tone={tonePosition.tone} flashSheet={flashSheet} index={index} key={index} showDivider={ flashSheets.length - 1 != index } />
+                <FlashContainer tone={tone.color} flashSheet={flashSheet} index={index} key={index} showDivider={ flashSheets.length - 1 != index } />
             ))}
-        </div>
-    )
-    const loading = (
-        <div className="m-auto mt-32 mb-40 w-fit flex flex-col items-center">
-            <img src="./ripley.png" alt="ripley" className="w-20 mt-4 animate-pulse" style={{ filter: "grayscale(100%) invert(90%) sepia(15%) saturate(1157%) hue-rotate(75deg) brightness(99%) contrast(89%)" }} />
-            <Typography variant="h5" color="primary" className="m-2">loading...</Typography>
-            <CustomLinearProgress className="w-full" />
         </div>
     )
 
@@ -108,10 +101,10 @@ const Home: React.FC = () => {
                             <div style={{ height: 35, width: 35 }} className="relative">
                                 <div className="
                                     absolute top-0 right-0 left-0 bottom-0 rounded-full
-                                " style={{ backgroundColor: tonePosition.tone }} />
+                                " style={{ backgroundColor: tone?.color }} />
                                 <FaRegFaceMehBlank size={30} className={`
                                     absolute top-0 right-0 left-0 bottom-0 m-auto
-                                    ${ tonePosition.position <= 0.5 ? "text-primary" : "text-paper-color" }
+                                    ${ tone?.position <= 0.5 ? "text-primary" : "text-paper-color" }
                                     transition duration-300
                                 `} />
                             </div>
@@ -138,7 +131,7 @@ const Home: React.FC = () => {
                         <IconButton onClick={() => setSelector(selectorState.none)}>
                             <CgClose className="text-primary hover:text-white transition duration-300" size={25} />
                         </IconButton>
-                        <ToneSelector onChange={handleToneChange} initialValue={tonePosition.position} />
+                        <ToneSelector onChange={handleToneChange} initialValue={tone.position} />
                     </span>
     );
     return(
@@ -148,7 +141,7 @@ const Home: React.FC = () => {
                 { selector == selectorState.search && selectorStateSearch }
                 { selector == selectorState.tone && selectorStateTone }
             </div>
-            { isLoading ? loading : flashContainer }
+            { isLoading ? <LoadingWidget /> : flashContainer }
         </Paper>
     )
 }

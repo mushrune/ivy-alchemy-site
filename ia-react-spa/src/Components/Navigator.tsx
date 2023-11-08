@@ -13,6 +13,7 @@ import {
 import { CgClose } from "react-icons/cg";
 import LeafSeperator from "./Widgets/LeafSeperator";
 import {handleLink} from "../Functions";
+import {Transition} from "@headlessui/react";
 
 /*
      note:
@@ -31,6 +32,7 @@ const Navigator: React.FC = () => {
     // height used to offset content from the top of the screen so the menu doesn't block it
     const [ offsetHeight, setOffsetHeight ] = useState<number>(0);
     const [ menuNode, setMenuNode ] = useState<HTMLElement | null>(null);
+    const [ isTransitioning, setIsTransitioning ] = useState<boolean>(false);
 
     // callback ref for menu height
     const menuHeightRef = useCallback( ( node: HTMLElement | null ) => setMenuNode( node ), [setMenuNode])
@@ -38,7 +40,7 @@ const Navigator: React.FC = () => {
     // this function sets the menu height given the menu node
     const setMenuState = () => {
         // if the menu node exists and the menu is closed, set the menu node height
-        if ( menuNode !== null && menu === false ) {
+        if ( menuNode !== null && menu === false && isTransitioning === false ) {
             const height = menuNode.getBoundingClientRect().height
             setOffsetHeight(height)
         }
@@ -100,16 +102,25 @@ const Navigator: React.FC = () => {
                                 <TbBrandInstagram size={25} />
                             </IconButton>
                         </div>
-                        { menu && <div className="flex justify-center items-center flex-col px-3 h-fit">
-                            <LeafSeperator />
-                            <div className="grid grid-cols-2 gap-6 mb-4 w-full">
-                                <Button className="nav-button" onClick={() => handleNavigation("/")} startIcon={<TbHome size={25} />}>home</Button>
-                                <Button className="nav-button" onClick={() => handleNavigation("/about")} startIcon={<TbInfoHexagon size={25} />}>about</Button>
-                                <Button className="nav-button" onClick={() => handleNavigation("/pricing")} startIcon={<TbCurrencyDollar size={25} />}>pricing</Button>
-                                <Button className="nav-button" onClick={() => handleNavigation("/contact")} startIcon={<TbFlare size={25} />}>contact</Button>
-                                <Button className="nav-button" onClick={() => handleNavigation("/after-care")} startIcon={<TbFirstAidKit size={25} />}>after care</Button>
+                        <Transition
+                            show={ menu }
+                            beforeLeave={ () => setIsTransitioning(true) }
+                            className="transition-all duration-500 overflow-hidden"
+                            enter="ease-in-out" enterFrom="max-h-0 opacity-0" enterTo="max-h-60 opacity-100"
+                            leave="ease-out" leaveFrom="max-h-60 opacity-100" leaveTo="max-h-0 opacity-0"
+                            afterLeave={() => setIsTransitioning(false) }
+                        >
+                            <div className="flex justify-center items-center flex-col px-3 h-58 overflow-hidden">
+                                <LeafSeperator />
+                                <div className="grid grid-cols-2 gap-6 mb-4 w-full">
+                                    <Button className="nav-button" onClick={() => handleNavigation("/")} startIcon={<TbHome size={25} />}>home</Button>
+                                    <Button className="nav-button" onClick={() => handleNavigation("/about")} startIcon={<TbInfoHexagon size={25} />}>about</Button>
+                                    <Button className="nav-button" onClick={() => handleNavigation("/pricing")} startIcon={<TbCurrencyDollar size={25} />}>pricing</Button>
+                                    <Button className="nav-button" onClick={() => handleNavigation("/contact")} startIcon={<TbFlare size={25} />}>contact</Button>
+                                    <Button className="nav-button" onClick={() => handleNavigation("/after-care")} startIcon={<TbFirstAidKit size={25} />}>after care</Button>
+                                </div>
                             </div>
-                        </div>}
+                        </Transition>
                     </div>
                 </div>
 

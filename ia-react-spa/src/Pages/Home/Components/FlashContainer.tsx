@@ -3,7 +3,7 @@ import { Button, Typography, Slider as MuiSlider } from "@mui/material";
 import {ButtonBack, ButtonNext, CarouselProvider, DotGroup, ImageWithZoom, Slide, Slider} from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import LeafSeperator from "../../../Components/Widgets/LeafSeperator";
-import { FlashSheet } from "../Types";
+import { FlashSheet } from "../../../Types";
 import FlashController from "./FlashController";
 import {TbArrowBigLeft, TbArrowBigRight, TbTriangleFilled} from "react-icons/tb";
 

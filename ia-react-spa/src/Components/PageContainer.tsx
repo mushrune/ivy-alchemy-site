@@ -14,7 +14,7 @@ const PageContainer: React.FC<props> = ({ title, icon, children }) => {
     return(
         <Paper className="p-4 rounded-2xl">
             <div className="flex justify-between">
-                <Typography variant="h4">{title}</Typography>
+                <Typography variant="h4" className="tracking-wider">{title}</Typography>
                 { icon }
             </div>
             <LeafSeperator />

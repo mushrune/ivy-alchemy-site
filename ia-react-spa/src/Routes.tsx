@@ -9,6 +9,7 @@ import About from "./Pages/About";
 import Booking from "./Pages/Booking";
 import Pricing from "./Pages/Pricing/Pricing";
 import Contact from "./Pages/Contact";
+import AfterCare from "./Pages/AfterCare";
 
 // This component handles wildcard inputs. For now, I have it structured as a not found page that can direct you home.
 const HandleWildcard: React.FC = () => {
@@ -34,6 +35,7 @@ export const Routes: RouteObject[] = [
             { path: "booking", element: <Booking />},
             { path: "pricing", element: <Pricing />},
             { path: "contact", element: <Contact />},
+            { path: "after-care", element: <AfterCare />},
             { path: "*", element: <HandleWildcard />}
         ]
     }

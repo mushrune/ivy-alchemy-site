@@ -13,6 +13,9 @@ import './index.css';
 import App from './App';
 import Options from './Theme/MUITheme';
 import { Routes } from './Routes';
+import DocumentProvider from "./Providers/DocumentProvider";
+import SelectedPieceProvider from "./Providers/SelectedPieceProvider";
+import SiteStateProviders from "./Providers/SiteStateProviders";
 
 // Establish the root
 const rootElement = document.getElementById('root') as HTMLElement;
@@ -32,15 +35,18 @@ const router = createBrowserRouter( Routes );
 // Render the app
 root.render(
     <React.StrictMode>
-        {/* StyledEngineProvider ensures the MUI styles are first in the <head> tag of index.html. Tailwind CSS styles need to be last so that they can override the MUI styles. */}
-        <StyledEngineProvider injectFirst>
-            {/* ThemeProvider applies the custom theme built on 22 */}
-            <ThemeProvider theme={theme}>
-                {/* MUI's style preflight, replaces @tailwind base; ( opinionated tailwind base styles ) */}
-                <CssBaseline />
-                {/* RouterProvider renders the app, so <App /> is not actually needed here. */}
-                <RouterProvider router={router} />
-            </ThemeProvider>
-        </StyledEngineProvider>
+        {/* Manages various site-wide contexts for tone, selected piece, and site docs.*/}
+        <SiteStateProviders>
+            {/* StyledEngineProvider ensures the MUI styles are first in the <head> tag of index.html. Tailwind CSS styles need to be last so that they can override the MUI styles. */}
+            <StyledEngineProvider injectFirst>
+                {/* ThemeProvider applies the custom theme built on 22 */}
+                <ThemeProvider theme={theme}>
+                    {/* MUI's style preflight, replaces @tailwind base; ( opinionated tailwind base styles ) */}
+                    <CssBaseline />
+                    {/* RouterProvider renders the app, so <App /> is not actually needed here. */}
+                    <RouterProvider router={router} />
+                </ThemeProvider>
+            </StyledEngineProvider>
+        </SiteStateProviders>
     </React.StrictMode>
 );

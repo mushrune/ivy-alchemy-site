@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Slider } from "@mui/material";
-import {TonePosition} from "../Types";
+import { TonePosition } from "../Types";
 
 const tones = [
     "#3b2219",
@@ -51,7 +51,7 @@ function getToneFromSliderValue( value: number ): string {
 }
 
 const initPos = ( Math.random() / 3 ) + 0.33
-export const initialTone: TonePosition = { tone: getToneFromSliderValue( initPos ), position: initPos } as TonePosition
+export const initialTone: TonePosition = { color: getToneFromSliderValue( initPos ), position: initPos } as TonePosition
 
 interface props {
     onChange: ( value: TonePosition ) => void;
@@ -65,7 +65,7 @@ const ToneSelector: React.FC<props> = ({ onChange, initialValue }) => {
     const handleSliderChange = ( event: Event, newValue: number | number[] ) => {
         const value = newValue as number;
         const tone = getToneFromSliderValue( value )
-        onChange( { position: value, tone: tone } as TonePosition )
+        onChange( { position: value, color: tone } as TonePosition )
         setTone( tone )
         setValue(value)
     }

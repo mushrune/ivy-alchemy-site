@@ -3,6 +3,10 @@ import {Paper, Typography} from "@mui/material";
 import LeafSeperator from "../Components/Widgets/LeafSeperator";
 import {TbCurrencyDollar, TbInfoHexagon} from "react-icons/tb";
 import PageContainer from "../Components/PageContainer";
+import {useDocumentContext} from "../Providers/DocumentProvider";
+import MuiMarkdown from "mui-markdown";
+import LoadingWidget from "../Components/Widgets/LoadingWidget";
+import DocumentViewer from "../Components/DocumentViewer";
 
 const greetings: string[] = [
     "Meow,",
@@ -20,22 +24,15 @@ const About: React.FC = () => {
 
     const greeting = greetings[ Math.floor( Math.random() * greetings.length ) ]
 
+    const documents = useDocumentContext();
+    const aboutMe = documents.find( d => d.title === "About Me")
+
     return(
         <PageContainer title={`${greeting} I'm Ivy.`} icon={<TbInfoHexagon size={40} className="ml-2" />}>
             <div className="mt-4 max-w-md mx-auto">
                 <img src="./ivy.jpeg" alt="ivy alchemist" className="w-full rounded-lg" />
             </div>
-            <Typography variant="body1">
-                I am a licensed tattoo artist established in Portland OR. My styles include
-                new school, blackwork and realism. I have tattood at multiple locations around PDX,
-                and you have likely seen my work on my instagram - @IvyAlchemist.
-                I started my career by earning my Oregon tattoo license at Point of View tattoo school.
-                This is also where I started tattooing, after I completed school and attained my license
-                I started working at Birdhouse Tattoo from 2021 to 2023. Now I am happily working at Paradise
-                Tattoo.
-                <br />
-                Please do not bring me any gluten treats!
-            </Typography>
+            <DocumentViewer documentTitle={"About Me"} />
         </PageContainer>
     )
 }

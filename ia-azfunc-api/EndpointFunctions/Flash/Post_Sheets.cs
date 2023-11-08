@@ -17,12 +17,12 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace ia_azfunc_api.EndpointFunctions.Flash
 {
-    public static class Get_Sheets
+    public static class Post_Sheets
     {
         // This function runs when the endpoint is called via HTTP.
-        [FunctionName(nameof(EndpointFunctions.Flash.Get_Sheets))]
+        [FunctionName(nameof(EndpointFunctions.Flash.Post_Sheets))]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "flash/sheets")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "flash/sheets")] HttpRequest req,
             ILogger log )
         {
             log.LogInformation($"Flash sheets requested by {req.Host.Host}");
