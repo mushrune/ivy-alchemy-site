@@ -43,7 +43,7 @@ const PieceInfo: React.FC<props> = ({ piece, handleInfoClose}) => {
                 src={piece.url}
                 alt={piece.title}
                 style={{ backgroundColor: tone.color }}
-                className="w-full rounded-xl max-w-2xl mx-auto mb-0 sm:mb-2"
+                className="w-full rounded-xl max-w-xl mx-auto mb-0 sm:mb-2"
             />
             <ToneSelector />
             <div className="max-h-[2%] overflow-hidden flex items-center relative">
