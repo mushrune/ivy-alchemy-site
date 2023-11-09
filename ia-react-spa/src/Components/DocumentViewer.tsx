@@ -3,16 +3,16 @@ import {useDocumentContext} from "../Providers/DocumentProvider";
 import LoadingWidget from "./Widgets/LoadingWidget";
 import MuiMarkdown, {getOverrides, Overrides} from "mui-markdown";
 import {Typography} from "@mui/material";
-import Markdown from "react-markdown";
 import LeafSeperator from "./Widgets/LeafSeperator";
 
 interface props {
     documentTitle: string;
     documentBody?: string;
+    overrides?: Overrides;
 }
 
 // TODO: Override img tag so images can be included in documents.
-const markdownOverrides: Overrides = {
+const baseOverrides: Overrides = {
     ...getOverrides(),
     h1: {
         component: Typography,
@@ -40,7 +40,16 @@ const markdownOverrides: Overrides = {
     }
 }
 
-const DocumentViewer: React.FC<props> = ({ documentTitle, documentBody }) => {
+const DocumentViewer: React.FC<props> = ({ documentTitle, documentBody, overrides }) => {
+
+    // Overrides can be passed to the component and appended to the base overrides described above
+    let docOverrides = baseOverrides;
+    if ( overrides ) {
+        docOverrides = {
+            ...baseOverrides,
+            ...overrides
+        }
+    }
 
     const documents = useDocumentContext();
     const selectedDocument = documents.find( d => d.title === documentTitle )
@@ -50,10 +59,10 @@ const DocumentViewer: React.FC<props> = ({ documentTitle, documentBody }) => {
     )}
 
     if ( documentBody ) { return(
-        <MuiMarkdown overrides={markdownOverrides}>{documentBody}</MuiMarkdown>
+        <MuiMarkdown overrides={docOverrides}>{documentBody}</MuiMarkdown>
     )}
     return(
-        <MuiMarkdown overrides={markdownOverrides}>{selectedDocument.body}</MuiMarkdown>
+        <MuiMarkdown overrides={docOverrides}>{selectedDocument.body}</MuiMarkdown>
     )
 }
 

@@ -1,25 +1,48 @@
-import React from 'react';
-import {Link, Paper, Typography} from "@mui/material";
+import React, {ReactNode} from 'react';
+import { Typography } from "@mui/material";
 import { TbCurrencyDollar } from "react-icons/tb";
-import LeafSeperator from "../../Components/Widgets/LeafSeperator";
-import {PricedItem} from "./Types";
-import Item from "./Components/Item";
 import PageContainer from "../../Components/PageContainer";
 import DocumentViewer from "../../Components/DocumentViewer";
+import {Overrides} from "mui-markdown";
 
-const items: PricedItem[] = [
-    { title: "Hourly Rate", description: "", price: 150, frequency: "hour" },
-    { title: "Drawing Fee", description: "", price: 100, frequency: "hour" },
-    { title: "Deposit Fee", description: "", price: 50, frequency: "hour" }
-];
+interface trProps {
+    children: ReactNode;
+}
+
+const tableRow: React.FC<trProps> = ({ children }) => {
+    return(
+        <span className="relative tr flex w-full justify-between mb-2">
+            <span className="absolute w-full top-0 left-0 mt-4 h-[1px] bg-primary" />
+            {children}
+        </span>
+    )
+}
+
+const pricingOverrides: Overrides = {
+    td: {
+        component: Typography,
+        props: {
+            variant: "h6",
+            className: "td italic z-[1] px-3 bg-paper-color"
+        }
+    },
+    th: {
+        component: Typography,
+        props: {
+            variant: "h6",
+            className: "td italic z-[1] px-3 bg-paper-color"
+        }
+    },
+    tr: {
+        component: tableRow,
+        props: { }
+    }
+}
 
 const Pricing: React.FC = () => {
     return(
         <PageContainer title={'Pricing'} icon={<TbCurrencyDollar size={40} />}>
-            { items.map( ( item, index ) =>
-                <Item key={index} item={item} />
-            )}
-            <DocumentViewer documentTitle="Pricing Policy" />
+            <DocumentViewer documentTitle="Pricing Policy" overrides={pricingOverrides} />
             {/*<Typography variant="body1" className="italic mt-4">*/}
             {/*    A deposit fee is required to confirm a tattoo appointment with me. The deposit you*/}
             {/*    pay will secure your appointment and will be deduced from the final cost of your tattoo.*/}

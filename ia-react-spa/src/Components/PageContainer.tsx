@@ -1,7 +1,5 @@
 import React, { ReactNode } from 'react';
-import {IconType} from "react-icons";
-import {Paper, Typography} from "@mui/material";
-import {TbFlare} from "react-icons/tb";
+import { Paper, Typography } from "@mui/material";
 import LeafSeperator from "./Widgets/LeafSeperator";
 
 interface props {
@@ -12,7 +10,7 @@ interface props {
 
 const PageContainer: React.FC<props> = ({ title, icon, children }) => {
     return(
-        <Paper className="p-4 rounded-2xl">
+        <Paper className="p-4 rounded-2xl" elevation={0}>
             <div className="flex justify-between">
                 <Typography variant="h4" className="tracking-wider">{title}</Typography>
                 { icon }
