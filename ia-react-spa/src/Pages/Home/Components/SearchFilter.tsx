@@ -28,7 +28,7 @@ const SearchFilter: React.FC<props> = ({filter}) => {
     );
 
     // filter type sheet tag
-    if ( filter.type == "sheet_tag" ) return(
+    if ( filter.type === "sheet_tag" ) return(
         <div className="flex items-center">
             <Typography variant="h6" className="lowercase font-normal">{filter.label}</Typography>
             <div className="flex-1" />

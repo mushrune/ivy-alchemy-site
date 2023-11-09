@@ -1,6 +1,6 @@
 import {Typography} from "@mui/material";
 import {CustomLinearProgress} from "./CustomLinearProgress";
-import React, {ReactNode} from "react";
+import React from "react";
 
 const LoadingWidget: React.FC = () => { return(
     <div className="m-auto mt-32 mb-40 w-fit flex flex-col items-center">

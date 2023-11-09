@@ -1,4 +1,4 @@
-import React, {memo, ReactElement, useEffect, useMemo, useState} from 'react';
+import React, { memo, ReactElement } from 'react';
 import { TbLeaf, TbBrandAmongUs, TbSeeding, TbHeart } from 'react-icons/tb';
 
 type ItemWeight = {
@@ -34,8 +34,6 @@ interface props {
 }
 
 const LeafIcon: React.FC<props> = ({size}) => {
-    let index = 0
-
     function randomItemSelect( items: ItemWeight[] ): number {
         // Calculate total weight for all items
         const totalWeight = items.reduce( ( sum, item ) => sum + item.weight, 0 )
@@ -52,7 +50,7 @@ const LeafIcon: React.FC<props> = ({size}) => {
         return 0
     }
 
-    index = randomItemSelect(items)
+    let index = randomItemSelect(items)
 
     return ( items[index].item )
 };

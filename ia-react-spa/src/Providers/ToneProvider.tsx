@@ -18,7 +18,7 @@ export const useToneContext = () => {
     const toneContext = useContext(ToneContext);
     if ( toneContext === null ) {
         throw new Error("Tone context must be called within a ToneProvider component");
-        return {
+        return { // eslint-disable-line
             tone: initialTone,
             setTone: ( tone: TonePosition ) => { }
         }

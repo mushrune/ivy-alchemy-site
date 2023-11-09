@@ -64,14 +64,14 @@ const FlashController: React.FC<props> = ({ flashSheet }) => {
     }, [infoOpen])
 
     // ensures correct title and descriptor show on render
-    useEffect( () => { handleCarouselChange() }, [] )
+    useEffect( () => { handleCarouselChange() }, [] ) // es-lint-disable-line
 
     // changes title and descriptor each time carousel state changes
     useEffect( () => {
         carouselContext.subscribe(handleCarouselChange);
 
         return () => carouselContext.unsubscribe(handleCarouselChange);
-    }, [carouselContext])
+    }, [carouselContext]) // es-lint-disable-line
 
     const sheetDescriptor = (
         <Typography variant="h2" className="mx-auto italic my-auto text-lg uppercase text-center">{flashSheet.title}</Typography>

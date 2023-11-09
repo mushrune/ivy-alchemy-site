@@ -42,10 +42,7 @@ const Home: React.FC = () => {
 
     const { tone } = useToneContext();
 
-    const handleSelectionChange = ( event: any, value: Filter[] | null ) => {
-        setFilters(value)
-        //setSelectedSheets( computeSelectedSheets( value, flashSheets ))
-    }
+    const handleSelectionChange = ( event: any, value: Filter[] | null ) => setFilters(value)
 
     // Side effect for fetching data from the API
     useEffect( () => {
@@ -79,7 +76,7 @@ const Home: React.FC = () => {
     const flashContainer = (
         <div>
             { flashSheets.map( ( flashSheet, index ) => (
-                <FlashContainer tone={tone.color} flashSheet={flashSheet} index={index} key={index} showDivider={ flashSheets.length - 1 != index } />
+                <FlashContainer tone={tone.color} flashSheet={flashSheet} index={index} key={index} showDivider={ flashSheets.length - 1 !== index } />
             ))}
         </div>
     )
@@ -127,9 +124,9 @@ const Home: React.FC = () => {
     return(
         <Paper className="rounded-2xl px-2 overflow-hidden pt-1 max-w-2xl mx-auto flex flex-col" elevation={0}>
             <div className="w-full pt-2 pb-4 sm:p-4">
-                { selector == selectorState.none && selectorStateNone }
-                { selector == selectorState.search && selectorStateSearch }
-                { selector == selectorState.tone && selectorStateTone }
+                { selector === selectorState.none && selectorStateNone }
+                { selector === selectorState.search && selectorStateSearch }
+                { selector === selectorState.tone && selectorStateTone }
             </div>
             { isLoading ? <LoadingWidget /> : flashContainer }
         </Paper>

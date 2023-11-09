@@ -1,15 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Filter } from '../Types'
-import {
-    Autocomplete,
-    AutocompleteProps,
-    Box, CircularProgress,
-    InputAdornment, styled,
-    TextField,
-    Typography,
-    UseAutocompleteProps
-} from "@mui/material";
-import { capitalizeWords } from "../Functions";
+import { Autocomplete, Box, CircularProgress, styled, TextField } from "@mui/material";
 import SearchFilter from "./SearchFilter";
 
 interface props {
@@ -65,12 +56,12 @@ const SearchSelector: React.FC<props> = (props) => {
             filters = filters.sort( (a, b) => b.count - a.count );
 
             if (active) { setFilters(filters) }
-        })()};
+        })()}
 
         return () => {
             active = false;
         }
-    }, [loading])
+    }, [ loading, filters.length ])
 
     return(
         <div className="flex-1">

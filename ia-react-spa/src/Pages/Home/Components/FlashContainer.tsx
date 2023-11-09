@@ -1,11 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import { Button, Typography, Slider as MuiSlider } from "@mui/material";
-import {ButtonBack, ButtonNext, CarouselProvider, DotGroup, ImageWithZoom, Slide, Slider} from 'pure-react-carousel';
+import { CarouselProvider, Slide, Slider } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import LeafSeperator from "../../../Components/Widgets/LeafSeperator";
 import { FlashSheet } from "../../../Types";
 import FlashController from "./FlashController";
-import {TbArrowBigLeft, TbArrowBigRight, TbTriangleFilled} from "react-icons/tb";
 
 interface props {
     flashSheet: FlashSheet;
@@ -28,8 +26,8 @@ const FlashContainer: React.FC<props> = ({ flashSheet, showDivider, index, tone 
 
     // bool that shows if the sheet's pieces have been filtered. The component behaves differently if this is true.
     const isFiltered = flashSheet.piece_ids.length > flashSheet.flash_pieces.length
+    const framePath: string = getRandomFramePath();
 
-    const [ framePath, setFramePath ] = useState<string>( getRandomFramePath() );
     const [ flashSheetState, setFlashSheetState ] = useState<FlashSheet>( flashSheet );
 
     useEffect( () => {
@@ -41,11 +39,6 @@ const FlashContainer: React.FC<props> = ({ flashSheet, showDivider, index, tone 
                 w-full h-fit overflow-hidden p-0 sm:px-4 ${ !showDivider ? "pb-4" : "pb-2" }
             `}
             key={index}>
-            {/*<div className="flex flex-around items-center mb-2 px-2">*/}
-            {/*    <Typography variant="h6" className="w-full text-left text-md sm:text-xl">{flashSheet.title}</Typography>*/}
-            {/*    <Typography variant="h6" className="w-fit text-sm sm:text-xl italic color-primary">{flashSheet.flash_pieces.length}</Typography>*/}
-            {/*    /!*<Button variant="outlined" size="small" className="nav-button px-8" startIcon={<TbCirclePlus size={20} />} sx={{zIndex: 0}}>browse</Button>*!/*/}
-            {/*</div>*/}
             <CarouselProvider
                 naturalSlideHeight={30}
                 naturalSlideWidth={30}
