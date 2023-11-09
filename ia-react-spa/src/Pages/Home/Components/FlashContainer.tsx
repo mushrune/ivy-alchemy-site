@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import { CarouselProvider, Slide, Slider } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
-import LeafSeperator from "../../../Components/Widgets/LeafSeperator";
+import LeafSeparator from "../../../Components/Widgets/LeafSeperator";
 import { FlashSheet } from "../../../Types";
 import FlashController from "./FlashController";
 
@@ -26,7 +26,7 @@ const FlashContainer: React.FC<props> = ({ flashSheet, showDivider, index, tone 
 
     // bool that shows if the sheet's pieces have been filtered. The component behaves differently if this is true.
     const isFiltered = flashSheet.piece_ids.length > flashSheet.flash_pieces.length
-    const framePath: string = getRandomFramePath();
+    const framePath: string = useMemo(() => getRandomFramePath(),[] );
 
     const [ flashSheetState, setFlashSheetState ] = useState<FlashSheet>( flashSheet );
 
@@ -83,7 +83,7 @@ const FlashContainer: React.FC<props> = ({ flashSheet, showDivider, index, tone 
                 </div>
                 <FlashController flashSheet={flashSheetState} />
             </CarouselProvider>
-            { showDivider && <LeafSeperator /> }
+            { showDivider && <LeafSeparator /> }
         </div>
     )
 }
