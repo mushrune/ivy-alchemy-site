@@ -26,6 +26,7 @@ const SearchSelector: React.FC<props> = (props) => {
 
     const [ open, setOpen ] = useState<boolean>(false);
     const [ filters, setFilters ] = useState<Filter[]>([]);
+    /* eslint-disable @typescript-eslint/no-unused-vars */
     const [ error, setError ] = useState<string>("");
     const loading = open && filters.length === 0;
 

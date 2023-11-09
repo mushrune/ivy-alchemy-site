@@ -10,11 +10,8 @@ import { CssBaseline } from "@mui/material";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 // Project imports:
 import './index.css';
-import App from './App';
 import Options from './Theme/MUITheme';
 import { Routes } from './Routes';
-import DocumentProvider from "./Providers/DocumentProvider";
-import SelectedPieceProvider from "./Providers/SelectedPieceProvider";
 import SiteStateProviders from "./Providers/SiteStateProviders";
 
 // Establish the root

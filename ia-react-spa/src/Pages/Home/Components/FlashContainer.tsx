@@ -32,11 +32,12 @@ const FlashContainer: React.FC<props> = ({ flashSheet, showDivider, index, tone 
 
     useEffect( () => {
         setFlashSheetState( flashSheet )
-    }, [ flashSheetState ] )
+    }, [ flashSheetState, flashSheet ] )
 
     return(
         <div className={`
-                w-full h-fit overflow-hidden p-0 sm:px-4 ${ !showDivider ? "pb-4" : "pb-2" }
+                w-full h-fit overflow-hidden p-0 sm:px-4 
+                ${ !showDivider ? "pb-4" : "pb-2" }
             `}
             key={index}>
             <CarouselProvider
