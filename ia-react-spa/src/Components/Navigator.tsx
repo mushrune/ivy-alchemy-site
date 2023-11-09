@@ -11,7 +11,7 @@ import {
     TbCurrencyDollar, TbFlare, TbFirstAidKit
 } from "react-icons/tb";
 import { CgClose } from "react-icons/cg";
-import LeafSeperator from "./Widgets/LeafSeperator";
+import LeafSeparator from "./Widgets/LeafSeparator";
 import { handleLink } from "../Functions";
 import { Transition } from "@headlessui/react";
 
@@ -111,7 +111,7 @@ const Navigator: React.FC = () => {
                             afterLeave={() => setIsTransitioning(false) }
                         >
                             <div className="flex justify-center items-center flex-col px-3 h-58 overflow-hidden">
-                                <LeafSeperator />
+                                <LeafSeparator />
                                 <div className="grid grid-cols-2 gap-6 mb-4 w-full">
                                     <Button className="nav-button" onClick={() => handleNavigation("/")} startIcon={<TbHome size={25} />}>home</Button>
                                     <Button className="nav-button" onClick={() => handleNavigation("/about")} startIcon={<TbInfoHexagon size={25} />}>about</Button>

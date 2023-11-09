@@ -5,7 +5,7 @@ import {useToneContext} from "../../../Providers/ToneProvider";
 import ToneSelector from "../../../Components/ToneSelector";
 import {usePieceContext} from "../../../Providers/SelectedPieceProvider";
 import {useNavigate} from "react-router-dom";
-import LeafSeperator from "../../../Components/Widgets/LeafSeperator";
+import LeafSeparator from "../../../Components/Widgets/LeafSeparator";
 import Options from "../../../Theme/MUITheme";
 
 interface props {
@@ -47,7 +47,7 @@ const PieceInfo: React.FC<props> = ({ piece, handleInfoClose}) => {
             />
             <ToneSelector />
             <div className="max-h-[2%] overflow-hidden flex items-center relative">
-                <LeafSeperator />
+                <LeafSeparator />
             </div>
             <div className="relative px-2 overflow-y-auto flex-1 w-full">
                 <div className="fixed h-10" style={{ background: `linear-gradient(to top, black, ${Options.palette?.background?.paper})`}} />

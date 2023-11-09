@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { Paper, Typography } from "@mui/material";
-import LeafSeperator from "./Widgets/LeafSeperator";
+import LeafSeparator from "./Widgets/LeafSeparator";
 
 interface props {
     title: string,
@@ -15,7 +15,7 @@ const PageContainer: React.FC<props> = ({ title, icon, children }) => {
                 <Typography variant="h4" className="tracking-wider">{title}</Typography>
                 { icon }
             </div>
-            <LeafSeperator />
+            <LeafSeparator />
             <div className="max-w-xl mx-auto mt-4">{children}</div>
         </Paper>
     )

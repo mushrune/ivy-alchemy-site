@@ -3,7 +3,7 @@ import {useDocumentContext} from "../Providers/DocumentProvider";
 import LoadingWidget from "./Widgets/LoadingWidget";
 import MuiMarkdown, {getOverrides, Overrides} from "mui-markdown";
 import {Typography} from "@mui/material";
-import LeafSeperator from "./Widgets/LeafSeperator";
+import LeafSeparator from "./Widgets/LeafSeparator";
 
 interface props {
     documentTitle: string;
@@ -36,7 +36,7 @@ const baseOverrides: Overrides = {
         }
     },
     hr: {
-        component: LeafSeperator
+        component: LeafSeparator
     }
 }
 

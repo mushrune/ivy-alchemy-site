@@ -1,7 +1,7 @@
 import React from 'react';
 import LeafIcon from "./LeafIcon";
 
-const LeafSeperator: React.FC = () => {
+const LeafSeparator: React.FC = () => {
     return(
         <div className="my-1 w-full flex justify-center items-center">
             <div className="bg-primary border-0 w-full h-px ml-2" />
@@ -13,4 +13,4 @@ const LeafSeperator: React.FC = () => {
     )
 }
 
-export default LeafSeperator;
+export default LeafSeparator;

@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import { CarouselProvider, Slide, Slider } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
-import LeafSeparator from "../../../Components/Widgets/LeafSeperator";
+import LeafSeparator from "../../../Components/Widgets/LeafSeparator";
 import { FlashSheet } from "../../../Types";
 import FlashController from "./FlashController";
 

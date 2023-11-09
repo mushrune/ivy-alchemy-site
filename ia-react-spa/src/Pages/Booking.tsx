@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import DocumentViewer from "../Components/DocumentViewer";
 import { Button, Checkbox, FormControlLabel, FormGroup, IconButton, Paper, Typography } from "@mui/material";
-import LeafSeperator from "../Components/Widgets/LeafSeperator";
+import LeafSeparator from "../Components/Widgets/LeafSeparator";
 import {handleLink} from "../Functions";
 import {usePieceContext} from "../Providers/SelectedPieceProvider";
 import {useToneContext} from "../Providers/ToneProvider";
@@ -61,7 +61,7 @@ const Booking: React.FC = () => {
         <Paper className="p-4 rounded-2xl">
             { selectedPiece !== null && SelectedPiecePreview }
             <DocumentViewer documentTitle={"Booking Policy"} />
-            <LeafSeperator />
+            <LeafSeparator />
             { selectedPiece !== null && SelectedPiecePreview }
             <FormGroup>
                 <FormControlLabel
