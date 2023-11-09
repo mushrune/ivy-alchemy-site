@@ -1,7 +1,7 @@
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import BrandLogo from "./BrandLogo";
 import { useNavigate } from "react-router-dom";
-import {Button, IconButton, Typography} from "@mui/material";
+import { Button, IconButton, Typography } from "@mui/material";
 import {
     TbBrandInstagram,
     TbNotebook,
@@ -12,8 +12,8 @@ import {
 } from "react-icons/tb";
 import { CgClose } from "react-icons/cg";
 import LeafSeperator from "./Widgets/LeafSeperator";
-import {handleLink} from "../Functions";
-import {Transition} from "@headlessui/react";
+import { handleLink } from "../Functions";
+import { Transition } from "@headlessui/react";
 
 /*
      note:
@@ -40,7 +40,7 @@ const Navigator: React.FC = () => {
     // this function sets the menu height given the menu node
     const setMenuState = () => {
         // if the menu node exists and the menu is closed, set the menu node height
-        if ( menuNode !== null && menu === false && isTransitioning === false ) {
+        if ( menuNode !== null && !menu && !isTransitioning ) {
             const height = menuNode.getBoundingClientRect().height
             setOffsetHeight(height)
         }
@@ -98,7 +98,7 @@ const Navigator: React.FC = () => {
                                 onClick={() => handleNavigation("/booking")}
                                 startIcon={<TbNotebook size={25} />}
                             >booking</Button>
-                            <IconButton className="nav-button" onClick={() => handleLink("https://www.instagram.com/ivy.alchemist/")}>
+                            <IconButton className="nav-button" onClick={() => handleLink(`${process.env.REACT_APP_INSTAGRAM_LINK}`)}>
                                 <TbBrandInstagram size={25} />
                             </IconButton>
                         </div>

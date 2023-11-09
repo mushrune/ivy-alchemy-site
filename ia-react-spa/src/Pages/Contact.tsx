@@ -1,6 +1,6 @@
 import React, {ReactNode} from 'react';
-import { IconButton, Paper, Typography } from "@mui/material";
-import { TbBrandInstagram, TbClipboardCopy, TbCopy, TbFlare, TbMailHeart } from "react-icons/tb";
+import { IconButton, Typography } from "@mui/material";
+import { TbBrandInstagram, TbCopy, TbFlare, TbMailHeart } from "react-icons/tb";
 import PageContainer from "../Components/PageContainer";
 import {handleLink} from "../Functions";
 
@@ -19,7 +19,7 @@ type contactMethod = {
 }
 
 const contactMethods: contactMethod[] = [
-    { text: '@ivy.alchemist', icon: ( <TbBrandInstagram size={40} /> ), link: 'https://www.instagram.com/ivy.alchemist/' },
+    { text: '@ivy.alchemist', icon: ( <TbBrandInstagram size={40} /> ), link: `${process.env.REACT_APP_INSTAGRAM_LINK}` },
     { text: 'contact@ivyalchemy.ink', icon: ( <TbMailHeart size={40} /> ), link: 'mailto:contact@ivyalchemy.ink' }
 ]
 
