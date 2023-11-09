@@ -1,15 +1,16 @@
 import React, {useState} from 'react';
 import DocumentViewer from "../Components/DocumentViewer";
-import {Backdrop, Button, Checkbox, FormControlLabel, FormGroup, Paper, Typography} from "@mui/material";
+import { Button, Checkbox, FormControlLabel, FormGroup, IconButton, Paper, Typography } from "@mui/material";
 import LeafSeperator from "../Components/Widgets/LeafSeperator";
 import {handleLink} from "../Functions";
 import {usePieceContext} from "../Providers/SelectedPieceProvider";
 import {useToneContext} from "../Providers/ToneProvider";
+import {CgClose} from "react-icons/cg";
 
 const Booking: React.FC = () => {
     const [ policyRead, setPolicyRead ] = useState<boolean>(false);
 
-    const { selectedPiece } = usePieceContext();
+    const { selectedPiece, setSelectedPiece } = usePieceContext();
     const { tone } = useToneContext();
 
     const handlePolicyReadChange = ( event: any ) => {
@@ -37,7 +38,7 @@ const Booking: React.FC = () => {
                 className="w-14 bg-white rounded-md"
                 style={{ backgroundColor: tone.color }}
             />
-            <div>
+            <div className="flex-1">
                 <Typography
                     variant="subtitle2"
                     className="ml-2"
@@ -47,6 +48,12 @@ const Booking: React.FC = () => {
                     className="italic ml-2"
                 >"{ selectedPiece?.title }"</Typography>
             </div>
+            <IconButton
+                onClick={() => setSelectedPiece()}
+                className="text-primary"
+            >
+                <CgClose size={25} />
+            </IconButton>
         </Paper>
     )
 
@@ -55,6 +62,7 @@ const Booking: React.FC = () => {
             { selectedPiece !== null && SelectedPiecePreview }
             <DocumentViewer documentTitle={"Booking Policy"} />
             <LeafSeperator />
+            { selectedPiece !== null && SelectedPiecePreview }
             <FormGroup>
                 <FormControlLabel
                     control={<Checkbox />}

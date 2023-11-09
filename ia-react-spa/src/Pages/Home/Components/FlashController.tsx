@@ -4,22 +4,21 @@ import {
     Button,
     Typography
 } from "@mui/material";
-import {ButtonBack, ButtonNext, CarouselContext} from 'pure-react-carousel';
+import { ButtonBack, ButtonNext, CarouselContext } from 'pure-react-carousel';
 import { FlashPiece, FlashSheet } from "../../../Types";
-import {TbArrowBigLeft, TbArrowBigRight} from "react-icons/tb";
+import { TbArrowBigLeft, TbArrowBigRight } from "react-icons/tb";
 import { CustomLinearProgress } from "../../../Components/Widgets/CustomLinearProgress";
-import SheetInfo from "./SheetInfo";
-import {Transition} from "@headlessui/react";
-import {usePieceContext} from "../../../Providers/SelectedPieceProvider";
-import {useNavigate} from "react-router-dom";
+import PieceInfo from "./PieceInfo";
+import { Transition } from "@headlessui/react";
+import { usePieceContext } from "../../../Providers/SelectedPieceProvider";
+import { useNavigate } from "react-router-dom";
 
 interface props {
     flashSheet: FlashSheet
 }
 
 function getSliderProgress( currentSlide: number, totalPieces: number ): number {
-    const currentPieceIndex = currentSlide
-    const progressPercentage = currentPieceIndex / totalPieces
+    const progressPercentage = currentSlide / totalPieces
     return progressPercentage * 100
 }
 
@@ -29,7 +28,7 @@ const FlashController: React.FC<props> = ({ flashSheet }) => {
     const [ currentPiece, setCurrentPiece ] = useState<FlashPiece | null>(null)
     const [ infoOpen, setInfoOpen ] = useState<boolean>(false);
 
-    const { selectedPiece, setSelectedPiece } = usePieceContext();
+    const { setSelectedPiece } = usePieceContext();
     const navigator = useNavigate();
 
     const handleSelectPiece = () => {
@@ -51,6 +50,19 @@ const FlashController: React.FC<props> = ({ flashSheet }) => {
     const handleInfoClose = () => setInfoOpen(false)
     const handleInfoOpen = () => setInfoOpen(true)
 
+    // locks scroll when info is open
+    useEffect( () => {
+        if ( infoOpen ) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+
+        return( () => {
+            document.body.style.overflow = '';
+        })
+    }, [infoOpen])
+
     // ensures correct title and descriptor show on render
     useEffect( () => { handleCarouselChange() }, [] )
 
@@ -70,10 +82,6 @@ const FlashController: React.FC<props> = ({ flashSheet }) => {
             <Typography className="italic lowercase w-full text-center">"{currentPiece?.title}"</Typography>
             <Typography className="lowercase w-full text-center font-bold">{currentPiece?.size_range}</Typography>
         </div>
-    )
-
-    const sheetInfoPanel = (
-        <Typography variant="h4" className="mx-auto my-auto text-lg uppercase text-center">{flashSheet.title}</Typography>
     )
 
     return(
@@ -102,11 +110,14 @@ const FlashController: React.FC<props> = ({ flashSheet }) => {
                 </div>
             </Transition>
             <Backdrop
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                sx={{
+                    color: '#fff',
+                    zIndex: (theme) => theme.zIndex.drawer + 1
+                }}
                 open={infoOpen}
                 onClick={handleInfoClose}
             >
-                <SheetInfo flashSheet={flashSheet} handleInfoClose={handleInfoClose} currentPieceIndex={carouselContext.state.currentSlide - 1}  />
+                <PieceInfo piece={currentPiece} handleInfoClose={handleInfoClose} />
             </Backdrop>
         </div>
     )

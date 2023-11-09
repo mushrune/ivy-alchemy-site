@@ -1,18 +1,10 @@
 // npm imports
 import React, { useState, useEffect } from 'react';
 import {
-    Autocomplete,
-    Badge,
-    Box,
-    Button,
-    Card,
-    CircularProgress,
     IconButton,
-    Paper,
-    TextField,
-    Typography
+    Paper
 } from "@mui/material";
-import {TbArrowBackUp, TbCirclePlus, TbDropCircle, TbDroplet, TbSearch} from "react-icons/tb";
+import {TbArrowBackUp, TbSearch} from "react-icons/tb";
 // project imports
 import { Filter } from './Types'
 import SearchSelector from "./Components/SearchSelector";
@@ -24,7 +16,7 @@ import MarqueeText from "../../Components/Widgets/MarqueeText";
 import { FaRegFaceMehBlank } from "react-icons/fa6";
 import LoadingWidget from "../../Components/Widgets/LoadingWidget";
 import { useToneContext } from "../../Providers/ToneProvider";
-import { FlashSheet, TonePosition } from "../../Types";
+import { FlashSheet } from "../../Types";
 
 export const homeLoader = () => {
     return fetch('/api/flash/sheets');
@@ -34,7 +26,7 @@ enum selectorState {
     none,
     tone,
     search
-};
+}
 
 // TODO: Reducer function to manipulate state logic
 const Home: React.FC = () => {
@@ -48,14 +40,12 @@ const Home: React.FC = () => {
     // Page states
     const [ selector, setSelector ] = useState<selectorState>(selectorState.none)
 
-    const { tone, setTone } = useToneContext();
+    const { tone } = useToneContext();
 
     const handleSelectionChange = ( event: any, value: Filter[] | null ) => {
         setFilters(value)
         //setSelectedSheets( computeSelectedSheets( value, flashSheets ))
     }
-
-    const handleToneChange = ( value: TonePosition ) => setTone(value);
 
     // Side effect for fetching data from the API
     useEffect( () => {
@@ -131,7 +121,7 @@ const Home: React.FC = () => {
                         <IconButton onClick={() => setSelector(selectorState.none)}>
                             <CgClose className="text-primary hover:text-white transition duration-300" size={25} />
                         </IconButton>
-                        <ToneSelector onChange={handleToneChange} initialValue={tone.position} />
+                        <ToneSelector />
                     </span>
     );
     return(

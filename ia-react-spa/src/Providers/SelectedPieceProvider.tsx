@@ -7,7 +7,7 @@ import { FlashPiece } from "../Types";
 
 type PieceContextType = {
     selectedPiece: FlashPiece | null
-    setSelectedPiece: (piece: FlashPiece ) => void;
+    setSelectedPiece: (piece?: FlashPiece | undefined ) => void;
 }
 
 const SelectedPieceContext = createContext<PieceContextType | null >( null );
@@ -27,8 +27,13 @@ interface selectedPieceProviderProps {
 
 const SelectedPieceProvider: React.FC<selectedPieceProviderProps> = ({ children }) => {
     const [ selectedPiece, setSelectedPiece ] = useState<FlashPiece | null>( null );
-    const handleSelectPiece = ( piece: FlashPiece ) => {
-        setSelectedPiece( piece )
+    const handleSelectPiece = ( piece: FlashPiece | undefined ) => {
+        if ( !piece ) {
+            setSelectedPiece(null);
+            return;
+        }
+
+        setSelectedPiece( piece );
     }
 
     return(
