@@ -18,8 +18,8 @@ const MarqueeText: React.FC<props> = ({text}) => {
     // this function sets the parent width given the text node
     const setParentWidthState = () => {
         if ( textNode !== null ) {
-            const height = textNode.getBoundingClientRect().width;
-            setParentWidth(height)
+            const width = textNode.getBoundingClientRect().width;
+            setParentWidth( width )
         }
     }
     // side effect for managing component width
@@ -39,7 +39,7 @@ const MarqueeText: React.FC<props> = ({text}) => {
     // side effect for detecting if the user has motion limited
     useEffect( () => {
         if ( limitMotionMatches ) { setLimitMotion(true) }
-    }, [])
+    }, [ limitMotionMatches ])
     // if the user prefers limited motion, disable the marque and return something else that doesn't move.
     if ( limitMotion ) { return(
         <Typography variant="h5" className="px-4 whitespace-nowrap italic text-primary text-2xl sm:text-4xl tracking-wide select-none">{text}</Typography>

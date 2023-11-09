@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Navigator from "./Components/Navigator";
-import {Outlet, useLocation} from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Footer from "./Components/Footer";
 
 // Renders the application and any elements that persist throughout.
