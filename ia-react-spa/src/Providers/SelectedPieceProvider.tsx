@@ -25,13 +25,24 @@ interface selectedPieceProviderProps {
     children: ReactNode
 }
 
+function tryLoadFromStorage(): FlashPiece | null {
+    const pieceString = localStorage.getItem( 'selectedFlashPiece' )
+    if ( pieceString === null ) {
+        return null;
+    }
+    return JSON.parse( pieceString );
+}
+
 const SelectedPieceProvider: React.FC<selectedPieceProviderProps> = ({ children }) => {
-    const [ selectedPiece, setSelectedPiece ] = useState<FlashPiece | null>( null );
+    const [ selectedPiece, setSelectedPiece ] = useState<FlashPiece | null>( tryLoadFromStorage() );
     const handleSelectPiece = ( piece: FlashPiece | undefined ) => {
         if ( !piece ) {
             setSelectedPiece(null);
+            localStorage.removeItem( 'selectedFlashPiece' )
             return;
         }
+
+        localStorage.setItem( 'selectedFlashPiece', JSON.stringify(piece) );
 
         setSelectedPiece( piece );
     }
