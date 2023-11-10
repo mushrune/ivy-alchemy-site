@@ -20,7 +20,17 @@ const Booking: React.FC = () => {
     // TODO: Add piece title to booking form via URL query parameter
     const handleBookingSubmit = () => {
         if ( policyRead ) {
-            handleLink("https://forms.gle/HKkb4VvVEpP6DzMGA")
+            let bookingLink = `${process.env.REACT_APP_BOOKING_URL_BASE}`
+            if ( selectedPiece ) {
+                let pieceTitle = selectedPiece.title.replace(" ", "+");
+                let titleParam = `&${process.env.REACT_APP_FORM_PIECE_TITLE_PARAM}=${pieceTitle}`;
+
+                let pieceSize = selectedPiece.size_range.replace(" ", "+");
+                let sizeParam = `&${process.env.REACT_APP_FORM_PIECE_SIZE_PARAM}=${pieceSize}`;
+                bookingLink = `${bookingLink}${titleParam}${sizeParam}`
+            }
+
+            handleLink(bookingLink)
         }
     }
 
@@ -75,6 +85,7 @@ const Booking: React.FC = () => {
                     variant="contained"
                     disabled={!policyRead}
                     onClick={handleBookingSubmit}
+                    className="font-semibold italic lowercase text-2xl tracking-wide"
                 >continue</Button>
             </FormGroup>
         </Paper>
