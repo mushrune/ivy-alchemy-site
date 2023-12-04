@@ -62,11 +62,11 @@ const FlashContainer: React.FC<props> = ({ flashSheet, showDivider, index, tone 
                             moveThreshold={0.1}
                         >
                             <Slide index={0} className="">
-                                <img className="w-full rounded-md" src={flashSheet.url} alt={flashSheet.title} />
+                                <img className="w-full rounded-md" style={{ pointerEvents: "none" }} src={flashSheet.url} alt={flashSheet.title} />
                             </Slide>
                             { flashSheet.flash_pieces.map( ( piece, index ) => (
                                 <Slide index={index + 1} key={index} className="">
-                                    <img className="w-full" src={piece.url} alt={piece.title} />
+                                    <img className="w-full" style={{ pointerEvents: "none" }} src={piece.url} alt={piece.title} />
                                 </Slide>
                             ))}
                         </Slider>

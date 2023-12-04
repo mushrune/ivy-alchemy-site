@@ -76,7 +76,7 @@ const FlashController: React.FC<props> = ({ flashSheet }) => {
     /* eslint-enable react-hooks/exhaustive-deps */
 
     const sheetDescriptor = (
-        <Typography variant="h2" className="mx-auto italic my-auto text-lg uppercase text-center">{flashSheet.title}</Typography>
+        <Typography variant="h2" className="mx-auto h-10 italic my-auto text-lg uppercase text-center">{flashSheet.title}</Typography>
     )
 
     const pieceDescriptor = (
