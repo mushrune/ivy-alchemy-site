@@ -23,7 +23,8 @@ const Booking: React.FC = () => {
             let bookingLink = `${process.env.REACT_APP_BOOKING_URL_BASE}`
             if ( selectedPiece ) {
                 let pieceTitle = selectedPiece.title.replace(" ", "+");
-                let titleParam = `&${process.env.REACT_APP_FORM_PIECE_TITLE_PARAM}=${pieceTitle}`;
+                let pieceId = selectedPiece.id
+                let titleParam = `&${process.env.REACT_APP_FORM_PIECE_TITLE_PARAM}="${pieceTitle}"+ID:+${pieceId}`;
 
                 let pieceSize = selectedPiece.size_range.replace(" ", "+");
                 let sizeParam = `&${process.env.REACT_APP_FORM_PIECE_SIZE_PARAM}=${pieceSize}`;

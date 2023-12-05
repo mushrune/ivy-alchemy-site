@@ -11,6 +11,7 @@
             flex items-center justify-center
             text-sm sm:text-2xl
             font-semibold sm:font-normal italic
+            tracking-wide
     }
 
     .slider-navigator {

@@ -3,12 +3,10 @@ import BrandLogo from "./BrandLogo";
 import { useNavigate } from "react-router-dom";
 import { Button, IconButton, Typography } from "@mui/material";
 import {
-    TbBrandInstagram,
-    TbNotebook,
-    TbMenu2,
-    TbHome,
-    TbInfoHexagon,
-    TbCurrencyDollar, TbFlare, TbFirstAidKit
+    TbBrandInstagram, TbNotebook,
+    TbMenu2, TbInfoHexagon,
+    TbCurrencyDollar, TbFlare,
+    TbFirstAidKit, TbPhotoStar
 } from "react-icons/tb";
 import { CgClose } from "react-icons/cg";
 import LeafSeparator from "./Widgets/LeafSeparator";
@@ -113,7 +111,7 @@ const Navigator: React.FC = () => {
                             <div className="flex justify-center items-center flex-col px-3 h-58 overflow-hidden">
                                 <LeafSeparator />
                                 <div className="grid grid-cols-2 gap-6 mb-4 w-full">
-                                    <Button className="nav-button" onClick={() => handleNavigation("/")} startIcon={<TbHome size={25} />}>home</Button>
+                                    <Button className="nav-button" onClick={() => handleNavigation("/")} startIcon={<TbPhotoStar size={25} />}>flash</Button>
                                     <Button className="nav-button" onClick={() => handleNavigation("/about")} startIcon={<TbInfoHexagon size={25} />}>about</Button>
                                     <Button className="nav-button" onClick={() => handleNavigation("/pricing")} startIcon={<TbCurrencyDollar size={25} />}>pricing</Button>
                                     <Button className="nav-button" onClick={() => handleNavigation("/contact")} startIcon={<TbFlare size={25} />}>contact</Button>
