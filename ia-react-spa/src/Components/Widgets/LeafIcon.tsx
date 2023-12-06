@@ -17,7 +17,7 @@ const items: ItemWeight[] = [
     },
     {
         weight: 777,
-        item: ( <img src="./ripley.png" alt="ripley" style={{ width: 20, filter: "grayscale(100%) invert(90%) sepia(15%) saturate(1157%) hue-rotate(75deg) brightness(99%) contrast(89%)" }} /> )
+        item: ( <img src="./ripley.webp" alt="ripley" style={{ width: 20, filter: "grayscale(100%) invert(90%) sepia(15%) saturate(1157%) hue-rotate(75deg) brightness(99%) contrast(89%)" }} /> )
     },
     {
         weight: 1,
@@ -33,7 +33,7 @@ interface props {
     size: number;
 }
 
-const LeafIcon: React.FC<props> = ({size}) => {
+const LeafIcon: React.FC = () => {
     function randomItemSelect( items: ItemWeight[] ): number {
         // Calculate total weight for all items
         const totalWeight = items.reduce( ( sum, item ) => sum + item.weight, 0 )
