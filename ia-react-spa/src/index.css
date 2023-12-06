@@ -25,6 +25,6 @@
 
 /* modify backdrop so it blurs instead of just making the page darker */
 .MuiBackdrop-root {
-    background-color: rgba(0, 0, 0, .1);
+    background-color: rgba(0, 0, 0, .7);
     backdrop-filter: blur(5px);
 }
