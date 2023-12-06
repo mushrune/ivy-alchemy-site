@@ -31,6 +31,7 @@ const Navigator: React.FC = () => {
     const [ offsetHeight, setOffsetHeight ] = useState<number>(0);
     const [ menuNode, setMenuNode ] = useState<HTMLElement | null>(null);
     const [ isTransitioning, setIsTransitioning ] = useState<boolean>(false);
+    const [ useIconButtons, setUseIconButtons ] = useState<boolean>(false);
 
     // callback ref for menu height
     const menuHeightRef = useCallback( ( node: HTMLElement | null ) => setMenuNode( node ), [setMenuNode])
@@ -40,6 +41,7 @@ const Navigator: React.FC = () => {
         // if the menu node exists and the menu is closed, set the menu node height
         if ( menuNode !== null && !menu && !isTransitioning ) {
             const height = menuNode.getBoundingClientRect().height
+            setUseIconButtons(menuNode.getBoundingClientRect().width < 640)
             setOffsetHeight(height)
         }
     }
@@ -64,6 +66,18 @@ const Navigator: React.FC = () => {
         navigator(to)
     }
 
+    const menuIconButton = (
+        <IconButton className={`nav-button`} onClick={() => setMenu(!menu)}>
+            { menu ? <CgClose size={25} /> : <TbMenu2 size={25} /> }
+        </IconButton>
+    );
+
+    const instagramIconButton = (
+        <IconButton className="nav-button" onClick={() => handleLink(`${process.env.REACT_APP_INSTAGRAM_LINK}`)}>
+            <TbBrandInstagram size={25} />
+        </IconButton>
+    )
+
     return(
         // This element acts as a spacer and contains the entire navigation menu
         <div style={{ height: `${offsetHeight}px`}} >
@@ -85,10 +99,16 @@ const Navigator: React.FC = () => {
                         mx-auto
                         w-[95%]
                 `}>
-                        <div className="flex sm:justify-evenly justify-evenly">
-                            <IconButton className={`nav-button`} onClick={() => setMenu(!menu)}>
-                                { menu ? <CgClose size={25} /> : <TbMenu2 size={25} /> }
-                            </IconButton>
+                        <div className="flex justify-evenly">
+                            { useIconButtons ? menuIconButton :
+                                <Button
+                                    variant="text"
+                                    disableElevation
+                                    className={`nav-button text-xl flex-1`}
+                                    onClick={() => setMenu(!menu)}
+                                    startIcon={menu ? <CgClose size={25} /> : <TbMenu2 size={25} />}
+                                >menu</Button>
+                            }
                             <Button
                                 variant="contained"
                                 disableElevation
@@ -96,9 +116,16 @@ const Navigator: React.FC = () => {
                                 onClick={() => handleNavigation("/booking")}
                                 startIcon={<TbNotebook size={25} />}
                             >booking</Button>
-                            <IconButton className="nav-button" onClick={() => handleLink(`${process.env.REACT_APP_INSTAGRAM_LINK}`)}>
-                                <TbBrandInstagram size={25} />
-                            </IconButton>
+                            {
+                                useIconButtons ? instagramIconButton :
+                                    <Button
+                                        variant="text"
+                                        disableElevation
+                                        className={`nav-button text-xl flex-1`}
+                                        onClick={() => handleLink(`${process.env.REACT_APP_INSTAGRAM_LINK}`)}
+                                        startIcon={<TbBrandInstagram size={25} />}
+                                    >instagram</Button>
+                            }
                         </div>
                         <Transition
                             show={ menu }
