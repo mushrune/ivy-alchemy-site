@@ -35,19 +35,24 @@ const Home: React.FC = () => {
     const [ filters, setFilters ] = useState<Filter[] | null>(null);
     const [ flashSheets, setFlashSheets ] = useState<FlashSheet[]>([]);
     // States for managing call to API
-    const [ isLoading, setIsLoading ] = useState<boolean>(true);
+    const [ isFetched, setIsFetched ] = useState<boolean>(false);
+    const [ imagesLoaded, setImagesLoaded ] = useState<boolean>(false);
     const [ error, setError ] = useState<string>("");
     // Page states
-    const [ selector, setSelector ] = useState<selectorState>(selectorState.none)
+    const [ selector, setSelector ] = useState<selectorState>(selectorState.none);
 
     const { tone } = useToneContext();
 
-    const handleSelectionChange = ( event: any, value: Filter[] | null ) => setFilters(value)
+    const isLoading = !isFetched && !imagesLoaded;
+
+    const handleSelectionChange = ( event: any, value: Filter[] | null ) => setFilters(value);
 
     // Side effect for fetching data from the API
     useEffect( () => {
+        setIsFetched(false);
+        setImagesLoaded(false);
+        // load sheets
         ( async () => {
-            setIsLoading(true);
             let sheets: FlashSheet[] = [];
             try {
                 const raw = await fetch('/api/flash/sheets', {
@@ -64,13 +69,29 @@ const Home: React.FC = () => {
                 setError("Could not load flash sheets. Please ensure you are connected to the internet. Meow!");
                 console.log(e)
             }
-
+            setIsFetched(true);
             setFlashSheets(sheets);
-            setIsLoading(false);
         })();
+
+        // pre-load images to prevent awkward load-in
+        if ( isFetched ) {
+            ( async () => {
+                await Promise.all(
+                    flashSheets
+                        .map( fs => fs.flash_pieces )
+                        .reduce( ( acc, fp ) => acc.concat( fp ), [])
+                        .map( fp => new Promise<void>((resolve) => {
+                            const img = new Image();
+                            img.src = fp.url;
+                            img.onerror = () => setError("Whoops! Could not load all the images.");
+                            img.onload = () => resolve();
+                })));
+                setImagesLoaded(true)
+            })();
+        }
     },[filters])
 
-    if ( error ) { return( <Error message={error} /> ) }
+    if ( error ) { return( <Error message={error} /> ); }
 
     // These two states are for the sheets loading
     const flashContainer = (
@@ -121,6 +142,7 @@ const Home: React.FC = () => {
                         <ToneSelector />
                     </span>
     );
+
     return(
         <Paper className="rounded-2xl px-2 overflow-hidden pt-1 max-w-2xl mx-auto flex flex-col" elevation={0}>
             <div className="w-full pt-2 pb-4 sm:p-4">
