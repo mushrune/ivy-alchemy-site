@@ -86,7 +86,7 @@ const Navigator: React.FC = () => {
                 <div className="bg-background-color shadow-xl shadow-background-color h-full w-full" />
             </div>
             {/*This element contains the navigator, logo, menu, etc...*/}
-            <div  ref={menuHeightRef} className="w-screen fixed top-0 z-[1000]">
+            <div ref={ menuHeightRef } className="w-screen fixed top-0 z-[1000]">
                 <div className="max-w-7xl mx-auto">
                     <BrandLogo />
                     <Typography variant="subtitle1" className="text-primary italic rounded-md px-2 text-center w-fit mx-auto">creatures of all sorts, for people of all sorts</Typography>
@@ -129,11 +129,11 @@ const Navigator: React.FC = () => {
                         </div>
                         <Transition
                             show={ menu }
-                            beforeLeave={ () => setIsTransitioning(true) }
+                            beforeLeave={() => setIsTransitioning(true)}
                             className="transition-all duration-500 overflow-hidden"
                             enter="ease-in-out" enterFrom="max-h-0 opacity-0" enterTo="max-h-60 opacity-100"
                             leave="ease-out" leaveFrom="max-h-60 opacity-100" leaveTo="max-h-0 opacity-0"
-                            afterLeave={() => setIsTransitioning(false) }
+                            afterLeave={() => setIsTransitioning(false)}
                         >
                             <div className="flex justify-center items-center flex-col px-3 h-58 overflow-hidden">
                                 <LeafSeparator />
